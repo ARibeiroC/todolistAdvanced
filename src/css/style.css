@@ -9,7 +9,7 @@ body {
     display: flex;
     align-items: center;
     min-height: 100vh;
-    background: url('/src/img/background.jpg') no-repeat fixed center;
+    background: url('../img/background.jpg') no-repeat fixed center;
     background-size: cover;
     backdrop-filter: blur(3px);
     color: #111;
