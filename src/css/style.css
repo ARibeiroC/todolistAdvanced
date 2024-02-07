@@ -1,0 +1,235 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: Helvetica;
+}
+
+body {
+    display: flex;
+    align-items: center;
+    min-height: 100vh;
+    background: url('/src/img/background.jpg') no-repeat fixed center;
+    background-size: cover;
+    backdrop-filter: blur(3px);
+    color: #111;
+}
+
+#todo-container {
+    display: flex;
+    flex-direction: column;
+
+    /* tamanho do container */
+    max-width: 500px;
+    height: auto;
+    max-height: 500px;
+
+    margin: 0 auto;
+    padding: 1rem;
+
+    background-color: rgba( 0, 0, 0, .8);
+    backdrop-filter: blur(15px);
+    box-shadow: 5px 5px 12px 6px #111;
+
+    border-radius: 10px;
+    border: 1px solid white;
+}
+
+    header {
+    color: cornflowerblue;
+    text-align: center;
+    }
+
+
+#todo-form {
+    display: flex;
+}
+
+    .todo-form {
+        display: flex;
+        flex-direction: column;
+
+        border-bottom: 1px solid #ccc;
+        padding: 1rem 0;
+    }
+
+        .subtitle {
+            display: flex;
+            align-items: flex-end;
+
+            color: #e39b56;
+            font-weight: bold;
+            margin-bottom: .4rem;
+        }
+
+        .form-control {
+            display: flex;
+        }
+
+            .form-inputs-control{
+                display: flex;
+                gap: .1rem;
+                flex: 4;
+                margin-right: .1rem;
+            }
+
+                .form-inputs-control input, #filter-select {
+                    flex: 1;
+                    padding: .2rem .4rem;
+                    outline-color: #e39b56;
+                }
+
+            .form-buttons-control {
+                display: flex;
+            }
+
+                .form-buttons-control button {
+                    width: 40px;
+                    height: 30px;
+                }
+
+#edit-form {
+    justify-content: space-between;
+    color: aqua;
+}
+
+#editing-inputs, #editing-button {
+    display: flex;
+    gap: .2rem;
+}
+
+#toolbar {
+    flex-direction: row;
+}
+
+    #search {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        flex: 2;
+
+        padding: .4rem .6rem;
+    }
+
+    #search form {
+        display: flex;
+    }
+
+    #filter {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+
+        padding: .4rem .6rem;
+    }
+
+#todo-task-list {
+    margin-top: 1rem;
+    flex: 3;
+    height: 100px;
+    overflow-y: scroll;
+}
+
+.task {
+    display: flex;
+    flex-direction: column;
+    gap: .6rem;
+    flex: 1;
+
+    padding: .6rem .2rem;
+    }
+
+
+
+    .todo {
+        display: flex;
+        padding: .4rem;
+
+        border-radius: 5px;
+        background-color: #fdfdfd;
+    }
+
+        .todo-text-itens {
+            display: flex;
+            flex-direction: column;
+            gap: .2rem;
+
+            padding: 0 .2rem;
+            min-height: 100%;
+            min-width: 80%;
+        }
+
+            .header-content-task {
+                display: flex;
+                justify-content: space-between;
+
+                border-bottom: 1px solid #999;
+                padding: .4rem .2rem;
+            }
+
+                .title-task {
+                    display: flex;
+                    align-items: center;
+
+                    color: #e39b56;
+                    font-weight: bold;
+                    font-size: 1rem;
+                }
+
+                .item-info {
+                    display: flex;
+                    gap: .2rem;
+                    align-items: center;
+
+                    font-size: .8rem;
+                    background-color: cornflowerblue;
+                    padding: .4rem .6rem;
+                    height: 100%;
+                    border-radius: 15px;
+                }
+
+            .description-task {
+                padding: .2rem;
+                font-size: .8rem;
+            }
+
+        .button-action-todo-list {
+            display: flex;
+            align-items: center;
+            gap: .1rem;
+            
+
+            padding: .1rem .2rem;
+        }
+
+        .button-action-todo-list button {
+            width: 20px;
+            height: 20px;
+            border-radius: 5px;
+            border-width: 1px;
+        }
+
+    .done {
+        display: flex;
+        padding: .4rem;
+
+        border-radius: 5px;
+        background-color: #111; 
+        text-decoration: line-through double;
+        opacity: .8;
+    }
+
+    .done, .done .title-task, .done .item-info, .done .description-task {
+        color: #333;
+    }
+
+    .done .item-info {
+        background-color: transparent;
+        border: 1px solid white;
+    }
+
+    .hide {
+        display: none;
+    }
+
+
