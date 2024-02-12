@@ -20,7 +20,7 @@
         <header>
             <h1>To-Do Advanced</h1>
         </header>
-        <form id="todo-form" class="todo-form">
+        <form class="todo-form">
             <p class="subtitle">Add your new task</p>
             <div class="form-control" >
                 <div class="form-inputs-control">
@@ -28,7 +28,9 @@
                     <input type="text" id="todo-description-task" placeholder="What do you want doing?">
                 </div>
                 <div class="form-buttons-control">
-                    <button id="erase-button"><i class="fa-solid fa-plus"></i></button>
+                    <button id="add-button">
+                        <i class="fa-solid fa-plus"></i>
+                    </button>
                 </div>
             </div>
         </form>
@@ -43,7 +45,7 @@
                     <button><i class="fa-solid fa-floppy-disk"></i></button>
                     <button id="todo-cancel-edit"><i class="fa-solid fa-xmark"></i></button>
                 </div>
-            </div>            
+            </div>          
         </form>
         <div id="toolbar" class="todo-form">
             <div id="search">
@@ -68,98 +70,7 @@
                 </select>
             </div>
         </div>
-        <div id="todo-task-list" class="task">
-            <div class="done">
-                <div class="todo-text-itens">
-                    <div class="header-content-task">
-                        <h3 class="title-task">Title task 1</h3>
-                        <div class="item-info">
-                            <p>Feito
-                                
-                            </p>
-                        </div>
-                    </div>
-                    <p class="description-task">Descrição da tarefa a realizar</p>
-                </div>
-                <div class="button-action-todo-list">
-                    <button>
-                        <i class="fa-solid fa-check"></i>
-                    </button>
-                    <button>
-                        <i class="fa-solid fa-pen-to-square"></i>
-                    </button>
-                    <button>
-                        <i class="fa-solid fa-xmark"></i>
-                    </button>
-                </div>
-            </div>
-            <div class="todo">
-                <div class="todo-text-itens">
-                    <div class="header-content-task">
-                        <h3 class="title-task">Title task 2</h3>
-                        <div class="item-info">
-                            <p>A fazer</p>
-                        </div>
-                    </div>
-                    <p class="description-task">Descrição da tarefa a realizar</p>
-                </div>
-                <div class="button-action-todo-list">
-                    <button>
-                        <i class="fa-solid fa-check"></i>
-                    </button>
-                    <button>
-                        <i class="fa-solid fa-pen-to-square"></i>
-                    </button>
-                    <button>
-                        <i class="fa-solid fa-xmark"></i>
-                    </button>
-                </div>
-            </div>
-            <div class="todo">
-                <div class="todo-text-itens">
-                    <div class="header-content-task">
-                        <h3 class="title-task">Title task 3</h3>
-                        <div class="item-info">
-                            <p>A fazer</p>
-                        </div>
-                    </div>
-                    <p class="description-task">Descrição da tarefa a realizar</p>
-                </div>
-                <div class="button-action-todo-list">
-                    <button>
-                        <i class="fa-solid fa-check"></i>
-                    </button>
-                    <button>
-                        <i class="fa-solid fa-pen-to-square"></i>
-                    </button>
-                    <button>
-                        <i class="fa-solid fa-xmark"></i>
-                    </button>
-                </div>
-            </div>
-            <div class="todo">
-                <div class="todo-text-itens">
-                    <div class="header-content-task">
-                        <h3 class="title-task">Title task 4</h3>
-                        <div class="item-info">
-                            <p>A fazer</p>
-                        </div>
-                    </div>
-                    <p class="description-task">Descrição da tarefa a realizar</p>
-                </div>
-                <div class="button-action-todo-list">
-                    <button>
-                        <i class="fa-solid fa-check"></i>
-                    </button>
-                    <button>
-                        <i class="fa-solid fa-pen-to-square"></i>
-                    </button>
-                    <button>
-                        <i class="fa-solid fa-xmark"></i>
-                    </button>
-                </div>
-            </div>
-        </div>
+        <div id="todo-task-list"></div>
     </section>
 </body>
 </html>
