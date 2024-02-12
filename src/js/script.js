@@ -58,5 +58,10 @@ function saveTodo(){
     `
 
     todoTaskList.style.display = 'flex'
+
+    titleTaskInput.value = ''
+    descriptionTaskInput.value = ''
+
+    titleTaskInput.focus()
 }
 
