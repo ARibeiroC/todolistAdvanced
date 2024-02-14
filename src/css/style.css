@@ -15,6 +15,14 @@ body {
     color: #111;
 }
 
+.hide {
+    display: none;
+}
+
+#add-button i {
+    pointer-events: none;
+}
+
 #todo-container {
     display: flex;
     flex-direction: column;
@@ -41,24 +49,95 @@ body {
     }
 
 
-.todo-form {
-    display: flex;
-    flex-direction: column;
+    .todo-form, #edit-form {
+        display: flex;
+        flex-direction: column;
 
-    border-bottom: 1px solid #ccc;
-    padding: 1rem 0;
-}
+        border-bottom: 1px solid #ccc;
+        padding: 1rem 0;
+        min-width: 100%;
+    }
+
+        .todo-form-control {
+            display: flex;
+        }
+        
+            .form-inputs-control{
+                display: flex;
+                gap: .2rem;
+                flex: 4;
+                margin-right: .2rem;
+            }
+        
+                .form-inputs-control input, #filter-select {
+                    flex: 1;
+                    padding: .2rem .4rem;
+                    height: 40px;
+                    outline-color: #e39b56;
+                    border: none;
+                    border-radius: 5px;
+                }
+        
+                .form-buttons-control {
+                    display: flex;
+                    flex: 1;
+                }
+            
+                    .form-buttons-control button {
+                        width: 40px;
+                        height: 40px;
+                    }
+        
+                .form-buttons-control button i {
+                    pointer-events: none;
+                }
+    
+    #edit-form {
+        display: none;
+    }
+
+        .edit-form-control{
+            display: flex;
+            flex-direction: column;
+            gap: .4rem;
+        }
+
+            #editing-inputs{
+                display: flex;
+                flex-direction: column;
+                gap: .4rem;
+                
+                flex: 1;
+            }
+
+            #editing-inputs input {
+                height: 35px;
+                padding: .2rem .4rem;
+                border-radius: 5px;
+                border: none;
+            }
+
+            #editing-button {
+                display: flex;
+                gap: .2rem;
+                justify-content: flex-end;
+            }
+
+            #editing-button button{
+                height: 35px;
+                
+            }
+
+            #editing-button #todo-save-edit {
+                width: 35px;
+            }
+
+            #editing-button #todo-cancel-edit {
+                padding: .2rem .4rem;
+            }
 
 
-#edit-form {
-    justify-content: space-between;
-    color: aqua;
-}
 
-#editing-inputs, #editing-button {
-    display: flex;
-    gap: .2rem;
-}
 
 /* Classes independentes */
 
@@ -73,33 +152,7 @@ body {
 }
 
 /* Estilização de formulários */
-.form-control {
-    display: flex;
-}
 
-    .form-inputs-control{
-        display: flex;
-        gap: .1rem;
-        flex: 4;
-        margin-right: .1rem;
-    }
-
-        .form-inputs-control input, #filter-select {
-            flex: 1;
-            padding: .2rem .4rem;
-            height: 40px;
-            outline-color: #e39b56;
-        }
-
-    .form-buttons-control {
-        display: flex;
-        flex: 1;
-    }
-
-        .form-buttons-control button {
-            width: 40px;
-            height: 40px;
-        }
 
 
 
@@ -151,16 +204,17 @@ body {
 
         border-radius: 5px;
         background-color: #fdfdfd;
+        border: 1px solid transparent;
     }
 
         .todo-text-itens {
             display: flex;
             flex-direction: column;
             gap: .2rem;
+            flex: 1;
 
             padding: 0 .2rem;
             min-height: 100%;
-            min-width: 80%;
         }
 
             .header-content-task {
@@ -171,7 +225,7 @@ body {
                 padding: .4rem .2rem;
             }
 
-                .title-task {
+             h3 {
                     display: flex;
                     align-items: center;
 
@@ -195,47 +249,46 @@ body {
             .description-task {
                 padding: .2rem;
                 font-size: .8rem;
+                min-height: 57%;
+                border: 1px dashed;
             }
 
         .button-action-todo-list {
             display: flex;
+            flex-direction: column;
             align-items: center;
             gap: .1rem;
-            
+            flex: .1;
 
             padding: .1rem .2rem;
         }
 
         .button-action-todo-list button {
-            width: 20px;
-            height: 20px;
+            width: 25px;
+            height: 25px;
             border-radius: 5px;
             border-width: 1px;
         }
 
-    .done {
-        display: flex;
-        padding: .4rem;
+        .button-action-todo-list button i {
+            pointer-events: none;
+        }
 
-        border-radius: 5px;
+    .done {
         background-color: #111; 
-        opacity: .8;
+        opacity: 1;
         border: 1px solid #ccc;
     }
 
-    .done .title-task, .done .description-task {
+    .done h3, .done .description-task {
         text-decoration: line-through;
-        color: #333;
+        color: #999;
     }
 
     .done .item-info {
         background-color: transparent;
-        border: 1px solid white;
+        border: .2px solid white;
         color: chartreuse;
-    }
-
-    .hide {
-        display: none;
     }
 
     input:hover, button:hover, select:hover {
@@ -288,10 +341,6 @@ body {
 
         .fa-plus, .fa-solid {
             font-size: 1rem;
-        }
-
-        .form-buttons-control #add-button .fa-solid, .form-buttons-control #add-button .fa-plus {
-            /* color: transparent; */
         }
 
     #toolbar {

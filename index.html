@@ -22,7 +22,7 @@
         </header>
         <form class="todo-form">
             <p class="subtitle">Add your new task</p>
-            <div class="form-control" >
+            <div class="todo-form-control" >
                 <div class="form-inputs-control">
                     <input type="text" id="todo-title-task" placeholder="Title task">
                     <input type="text" id="todo-description-task" placeholder="What do you want doing?">
@@ -34,16 +34,16 @@
                 </div>
             </div>
         </form>
-        <form id="edit-form" class="todo-form hide">
+        <form id="edit-form">
             <p class="subtitle">Editing your task</p>
-            <div class="form-control">
-                <div id="editing-inputs" class="form-inputs-control">
-                    <input type="text" id="todo-editing-title-task">
-                    <input type="text" id="todo-editing-description-task">
+            <div class="edit-form-control">
+                <div id="editing-inputs">
+                    <input type="text" id="todo-editing-title-task" placeholder="Title task">
+                    <input type="text" id="todo-editing-description-task" placeholder="What do you want doing?">
                 </div>
-                <div id="editing-button" class="form-buttons-control">
-                    <button><i class="fa-solid fa-floppy-disk"></i></button>
-                    <button id="todo-cancel-edit"><i class="fa-solid fa-xmark"></i></button>
+                <div id="editing-button">
+                    <button id="todo-save-edit"><i class="fa-solid fa-floppy-disk"></i></button>
+                    <button id="todo-cancel-edit">Cancel</i></button>
                 </div>
             </div>          
         </form>
@@ -70,7 +70,8 @@
                 </select>
             </div>
         </div>
-        <div id="todo-task-list"></div>
+        <div id="todo-task-list">
+        </div>
     </section>
 </body>
 </html>
