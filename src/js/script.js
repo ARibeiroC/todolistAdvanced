@@ -132,14 +132,17 @@
         const btnDone = document.createElement('button')
         btnDone.classList.add('btn-done')
         buttonActionTodoList.appendChild(btnDone)
+        btnDone.setAttribute('name', 'done-task-button')
 
         const btnEdit = document.createElement('button')
         btnEdit.classList.add('btn-edit')
         buttonActionTodoList.appendChild(btnEdit)
+        btnEdit.setAttribute('name', 'edit-task-button')
 
         const btnRemove = document.createElement('button')
         btnRemove.classList.add('btn-remove')
         buttonActionTodoList.appendChild(btnRemove)
+        btnRemove.setAttribute('name', 'remove-task-button')
 
         // CRIANDO OS ICONES DOS BOTÕES
         const iconBtnDone = document.createElement('i')
@@ -179,4 +182,15 @@
     function removeTodo(){
         parentEl.parentNode.remove()
     }
+
+    function toggleForms() {
+
+    }
+
+    function showObject(){
+        
+        console.log(Object(addTaskButton))
+    }
+
+showObject()
 
