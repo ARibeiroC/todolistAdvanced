@@ -18,32 +18,32 @@
 <body>
     <section id="todo-container">
         <header>
-            <h1>To-Do Advanced</h1>
+            <h2>To-Do Advanced</h2>
         </header>
-        <form class="todo-form">
+        <form class="todo-form" id="form-add-task">
             <p class="subtitle">Add your new task</p>
-            <div class="form-control" >
+            <div class="todo-form-control" >
                 <div class="form-inputs-control">
                     <input type="text" id="todo-title-task" placeholder="Title task">
                     <input type="text" id="todo-description-task" placeholder="What do you want doing?">
                 </div>
                 <div class="form-buttons-control">
-                    <button id="add-button">
+                    <button id="add-button" class="btnControl">
                         <i class="fa-solid fa-plus"></i>
                     </button>
                 </div>
             </div>
         </form>
-        <form id="edit-form" class="todo-form hide">
+        <form class="todo-form hide" id="form-edit-task">
             <p class="subtitle">Editing your task</p>
-            <div class="form-control">
-                <div id="editing-inputs" class="form-inputs-control">
-                    <input type="text" id="todo-editing-title-task">
-                    <input type="text" id="todo-editing-description-task">
+            <div class="edit-form-control">
+                <div id="editing-inputs">
+                    <input type="text" id="todo-editing-title-task" placeholder="Title task">
+                    <input type="text" id="todo-editing-description-task" placeholder="What do you want doing?">
                 </div>
-                <div id="editing-button" class="form-buttons-control">
-                    <button><i class="fa-solid fa-floppy-disk"></i></button>
-                    <button id="todo-cancel-edit"><i class="fa-solid fa-xmark"></i></button>
+                <div id="editing-button">
+                    <button id="todo-cancel-edit" name="cancel-edit-button">Cancel</i></button>
+                    <button id="todo-save-edit" name="save-edit-button"><i class="fa-solid fa-floppy-disk"></i></button>
                 </div>
             </div>          
         </form>
@@ -55,7 +55,7 @@
                         <input type="text" placeholder="Find your task">
                     </div>
                     <div class="form-buttons-control">
-                        <button id="erase-search">
+                        <button id="erase-search" name="erase-search-button" class="btnControl">
                             <i class="fa-solid fa-circle-arrow-left"></i>
                         </button>
                     </div>

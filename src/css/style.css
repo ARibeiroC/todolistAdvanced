@@ -1,68 +1,335 @@
-* {
-    padding: 0;
-    margin: 0;
-    box-sizing: border-box;
-    font-family: Helvetica;
+/* O código CSS abaixo define o estilo da página. */
+
+* { 
+    padding: 0; 
+    margin: 0; 
+    box-sizing: border-box; 
+    font-family: Helvetica; 
 }
 
-body {
-    display: flex;
-    align-items: center;
-    min-height: 100vh;
-    background: url('../img/background.jpg') no-repeat fixed center;
-    background-size: cover;
-    backdrop-filter: blur(10px);
-    color: #111;
+body { 
+    display: flex; 
+    align-items: center; 
+    min-height: 100vh; 
+    background: url('../img/background.jpg') no-repeat fixed center; 
+    background-size: cover; 
+    backdrop-filter: blur(10px); 
+    color: #111; 
 }
 
-#todo-container {
-    display: flex;
-    flex-direction: column;
+#todo-container { display: flex; flex-direction: column;
 
-    /* tamanho do container */
-    max-width: 410px;
-    height: auto;
-    max-height: 500px;
+max-width: 410px;
+min-width: 410px;
+height: auto;
+max-height: 500px;
 
-    margin: 0 auto;
-    padding: 1rem;
+margin: 0 auto;
+padding: 1rem;
 
-    background-color: rgba( 0, 0, 0, .8);
-    backdrop-filter: blur(15px);
-    box-shadow: 5px 5px 12px 6px #111;
+background-color: rgba( 0, 0, 0, .8);
+backdrop-filter: blur(15px);
+box-shadow: 5px 5px 12px 6px #111;
 
-    border-radius: 10px;
-    border: 1px solid white;
+border-radius: 10px;
+border: 1px solid white;
 }
 
-    header {
-    color: cornflowerblue;
-    text-align: center;
-    }
 
+/* O código CSS abaixo define o estilo do input de tarefa. */
 
-.todo-form {
+#todo-input { 
+    width: 100%; 
+    height: 30px; 
+    border: 1px solid #111; 
+    padding: 5px; 
+    border-radius: 5px; 
+}
+
+/* O código CSS abaixo define o estilo da lista de tarefas. */
+
+.todo-item { 
+    display: flex; 
+    align-items: center; 
+    padding: 5px 0; 
+    border-bottom: 1px solid #111; 
+}
+
+.todo-item:last-child { 
+    border-bottom: none; 
+}
+
+.todo-item .todo-text { 
+    flex: 1; 
+    padding: 0 10px; 
+}
+
+.todo-item .todo-delete { 
+    cursor: pointer; 
+    color: #111; 
+}
+
+header {
+color: cornflowerblue;
+text-align: center;
+}
+
+/* CONFIGURAÇÕES DO FORMULÁRIO DE ADIÇÃO DE TAREFAS */
+.todo-form{
     display: flex;
     flex-direction: column;
 
     border-bottom: 1px solid #ccc;
     padding: 1rem 0;
+    min-width: 100%;
 }
 
-
-#edit-form {
-    justify-content: space-between;
-    color: aqua;
+.todo-form-control {
+    display: flex;
 }
-
-#editing-inputs, #editing-button {
+        
+.form-inputs-control{
     display: flex;
     gap: .2rem;
+    flex: 4;
+    margin-right: .2rem;
+}
+        
+.form-inputs-control input, #filter-select {
+    flex: 1;
+    padding: .2rem .4rem;
+    height: 40px;
+    outline-color: #e39b56;
+    border: none;
+    border-radius: 5px;
 }
 
-/* Classes independentes */
+.form-buttons-control {
+    display: flex;
+}
+
+#add-button i { 
+    pointer-events: none;
+}
+
+.form-buttons-control button i {
+    pointer-events: none;
+}
 
 
+/* CONFIGURAÇÕES DO FORMULÁRIO DE EDIÇÃO DA TAREFA */
+#edit-form {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid purple;
+}
+
+.edit-form-control{
+    display: flex;
+    flex-direction: column;
+    gap: .4rem;
+}
+
+#editing-inputs{
+    display: flex;
+    flex-direction: column;
+    gap: .4rem;
+    
+    flex: 1;
+}
+
+#editing-inputs input {
+    height: 35px;
+    padding: .2rem .4rem;
+    border-radius: 5px;
+    border: none;
+}
+
+#editing-button {
+    display: flex;
+    gap: .2rem;
+    justify-content: flex-end;
+}
+
+#editing-button button{
+    height: 35px;
+    
+}
+
+#editing-button #todo-save-edit {
+    width: 35px;
+}
+
+#editing-button #todo-save-edit i {
+    pointer-events: none;
+}
+
+#editing-button #todo-cancel-edit {
+    padding: .2rem .4rem;
+}
+
+
+
+/* CONFIGURAÇÃO DO FORMULÁRIO DE BUSCA DAS TAREFAS */
+#toolbar {
+    flex-direction: row;
+}
+
+#search {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    flex: 1;
+
+    padding: .4rem .6rem;
+}
+
+#search form {
+    display: flex;
+}
+
+
+#filter {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    flex: .3;
+    padding: .4rem .6rem;
+}
+
+option {
+    max-width: 100%;
+}
+
+
+/* CONFIGURAÇÕES DOS CARDS DAS TAREFAS */
+#todo-task-list {
+    flex-direction: column;
+    gap: .2rem;
+
+    padding: .6rem .2rem;
+    margin-top: 1rem;
+    flex: 3;
+    height: 100px;
+}
+
+.todo {
+    display: flex;
+    padding: .4rem;
+
+    border-radius: 5px;
+    background-color: #fdfdfd;
+    border: 1px solid;
+}
+
+.todo-text-itens {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    gap: .2rem;
+
+    padding: 0 .2rem;
+    min-height: 100%;
+}
+
+.header-content-task {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: .2rem;
+}
+
+h3 {
+    display: flex;
+    align-items: center;
+
+    color: #e39b56;
+    font-weight: bold;
+    font-size: 1rem;
+    height: 15px;
+}
+
+.item-info {
+    display: flex;
+    align-items: center;
+
+    font-size: .6rem;
+    background-color: cornflowerblue;
+    padding: .2rem .4rem;
+    height: 100%;
+    border-radius: 15px;
+    border: 1px solid cornflowerblue;
+}
+
+.description-task {
+    padding: .2rem;
+    font-size: .8rem;
+    border: 1px dashed #999;
+    border-radius: 5px;
+    border-style: inset;
+    height: 100%;
+}
+
+.button-action-todo-list {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: .1rem;
+    flex: .1;
+
+    padding: .1rem .2rem;
+}
+
+.button-action-todo-list button {
+    width: 25px;
+    height: 25px;
+    border-radius: 5px;
+    border-width: 1px;
+}
+
+.button-action-todo-list button i {
+    pointer-events: none;
+}
+
+.done {
+    background-color: #111; 
+    border: 1px solid #ccc;
+}
+
+.done h3, .done .description-task {
+text-decoration: line-through;
+color: #999;
+}
+
+.done .item-info {
+    background-color: transparent;
+    border: 1px solid white;
+    color: chartreuse;
+}
+
+input:hover, button:hover, select:hover {
+    border-color: #e39b56;
+} 
+
+/*  <<<<<<<<<<<< CLASSES INDEPENDENTES PARA CONFIGURAÇÕES DIVERSAS >>>>>>>>>>>>  */
+
+/* CONFIGURAÇÃO DE OCULTAR FORMULÁRIOS */
+.hide{
+    display: none;
+}
+
+/* CONFIGURAÇÃO PADRÃO DOS BOTÕES */
+.btnControl {
+    cursor: pointer;
+    width: 40px;
+    height: 40px;
+    border-radius: 4px;
+    border: none;
+}
+
+/* CLASSE DE CONFIGURAÇÃO DOS SUBTITULOS */
 .subtitle {
     display: flex;
     align-items: flex-end;
@@ -72,177 +339,8 @@ body {
     margin-bottom: .4rem;
 }
 
-/* Estilização de formulários */
-.form-control {
-    display: flex;
-}
 
-    .form-inputs-control{
-        display: flex;
-        gap: .1rem;
-        flex: 4;
-        margin-right: .1rem;
-    }
-
-        .form-inputs-control input, #filter-select {
-            flex: 1;
-            padding: .2rem .4rem;
-            height: 40px;
-            outline-color: #e39b56;
-        }
-
-    .form-buttons-control {
-        display: flex;
-        flex: 1;
-    }
-
-        .form-buttons-control button {
-            width: 40px;
-            height: 40px;
-        }
-
-
-
-#toolbar {
-    flex-direction: row;
-}
-
-    #search {
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        flex: 2;
-
-        padding: .4rem .6rem;
-    }
-
-    #search form {
-        display: flex;
-    }
-
-    #filter {
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-
-        padding: .4rem .6rem;
-    }
-
-    option {
-        max-width: 100%;
-    }
-
-#todo-task-list {
-    display: flex;
-    flex-direction: column;
-    gap: .6rem;
-    flex: 1;
-
-    padding: .6rem .2rem;
-    margin-top: 1rem;
-    flex: 3;
-    height: 100px;
-    overflow-y: scroll;
-}
-
-    .todo {
-        display: flex;
-        padding: .4rem;
-
-        border-radius: 5px;
-        background-color: #fdfdfd;
-    }
-
-        .todo-text-itens {
-            display: flex;
-            flex-direction: column;
-            gap: .2rem;
-
-            padding: 0 .2rem;
-            min-height: 100%;
-            min-width: 80%;
-        }
-
-            .header-content-task {
-                display: flex;
-                justify-content: space-between;
-
-                border-bottom: 1px solid #999;
-                padding: .4rem .2rem;
-            }
-
-                .title-task {
-                    display: flex;
-                    align-items: center;
-
-                    color: #e39b56;
-                    font-weight: bold;
-                    font-size: 1rem;
-                }
-
-                .item-info {
-                    display: flex;
-                    gap: .2rem;
-                    align-items: center;
-
-                    font-size: .6rem;
-                    background-color: cornflowerblue;
-                    padding: .2rem .4rem;
-                    height: 100%;
-                    border-radius: 15px;
-                }
-
-            .description-task {
-                padding: .2rem;
-                font-size: .8rem;
-            }
-
-        .button-action-todo-list {
-            display: flex;
-            align-items: center;
-            gap: .1rem;
-            
-
-            padding: .1rem .2rem;
-        }
-
-        .button-action-todo-list button {
-            width: 20px;
-            height: 20px;
-            border-radius: 5px;
-            border-width: 1px;
-        }
-
-    .done {
-        display: flex;
-        padding: .4rem;
-
-        border-radius: 5px;
-        background-color: #111; 
-        opacity: .8;
-        border: 1px solid #ccc;
-    }
-
-    .done .title-task, .done .description-task {
-        text-decoration: line-through;
-        color: #333;
-    }
-
-    .done .item-info {
-        background-color: transparent;
-        border: 1px solid white;
-        color: chartreuse;
-    }
-
-    .hide {
-        display: none;
-    }
-
-    input:hover, button:hover, select:hover {
-        border-color: #e39b56;
-    } 
-
-
+/*  <<<<<<<<<<<< CONFIGURAÇÕES DE RESPONSIVIDADE >>>>>>>>>>>>  */
 @media (max-width: 470px) {
     #todo-container {
         min-width: 95%;
@@ -288,10 +386,6 @@ body {
 
         .fa-plus, .fa-solid {
             font-size: 1rem;
-        }
-
-        .form-buttons-control #add-button .fa-solid, .form-buttons-control #add-button .fa-plus {
-            /* color: transparent; */
         }
 
     #toolbar {
