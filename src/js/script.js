@@ -1,362 +1,256 @@
 // GLOBAL VARIABLES
-    let arrayTodoList = []
-    let editCurrentId;
-    let taskLocalStorage;
+let data = []
 
-    // GET ELEMENTS HTML
+// SELEÇÃO DE ELEMENTOS DO DOM
+const todoAddTask = document.querySelector("#form-add-task")
+const todoTitleInputTask = document.querySelector("#todo-title-task")
+const todoDescriptionInputTask = document.querySelector("#todo-description-task")
+const todoEditTask = document.querySelector("#form-edit-task")
+const todoEditTitleTask = document.querySelector('#todo-editing-title-task')
+const todoEditDescriptionTask = document.querySelector('#todo-editing-description-task')
+const todoSearch = document.querySelector("#toolbar")
+const todoListTask = document.querySelector("#todo-task-list")
+const btnCancelEditTask = document.querySelector('#todo-cancel-edit')
+const btnSaveEditTask = document.querySelector('#todo-save-edit')
 
-        // RECEBENDO OS FORMULÁRIOS TODO-FORM ADD TASK
-            const formAddTask = document.querySelector('#form-add-task')
+// FUNÇÕES
 
-        // RECEBENDO OS ELEMENTOS HTML DO FORM DE ADICIONAR TAREFAS
-            const titleTaskInput = document.querySelector('#todo-title-task')
-            const descriptionTaskInput = document.querySelector('#todo-description-task')
+    // CRIA E RENDERIZA OS ELEMENTOS DO DOM
+    function saveTodo(task, status = 'to-do') {
 
-        // RECEBENDO OS ELEMENTOS HTML DO FORM DE EDITAR TAREFAS
-            const formEditTask = document.querySelector('#form-edit-task')
-            const titleEditInput = document.querySelector('#todo-editing-title-task')
-            const descriptionEditInput = document.querySelector('#todo-editing-description-task')
-            const cancelEditBtn = document.querySelector('#todo-cancel-edit')
-            const saveEditBtn = document.querySelector('#todo-save-edit')
+        // CRIANDO O CARD DA TASK
+        const todo = document.createElement("div")
+        todo.classList.add("todo")
+        todo.classList.add(`${status}`)
+        todo.setAttribute('id', task.id)
+        todoListTask.appendChild(todo)
 
-        // RECEBENDO OS ELEMENTO HTML DO FORM DA TOOLBAR
-            const toolbar = document.querySelector('#toolbar')
+        // CRIANDO O CONTEÚDO DO HEADER DA TASK
+        const headerContentTask = document.createElement("div")
+        headerContentTask.classList.add('header-content-task')
+        todo.appendChild(headerContentTask)
+        
+        // ESCREVENDO O TEXTO DO TÍTULO DA TASK
+        const todoTitle = document.createElement('h3')
+        todoTitle.innerText = task.title
+        headerContentTask.appendChild(todoTitle)
 
-        // RECEBENDO OS ELEMENTOS HTML DOS CARDS DEA LISTA DE TAREFAS
-            const todoTaskList = document.querySelector('#todo-task-list')
-            const btnDone = document.querySelector('btn-done')
-            const btnEdit = document.querySelector('btn-edit')
-            const btnRemove = document.querySelector('btn-remove')
-            const todo = document.querySelector('.todo')
-            const itemInfo = document.querySelector('.item-info')
+        // CRIANOD O CONTEÚDO DO BODY DA TASK
+        const bodyContentTask = document.createElement("div")
+        bodyContentTask.classList.add('body-content-task')
+        todo.appendChild(bodyContentTask)
 
+        // CRIANDO A DIV COM O STATUS DA TASK E ESCREVENDO O STATUS DEFAULT
+        const todoStatus = document.createElement('p')
+        todoStatus.classList.add('task-info')
+        todoStatus.innerText = task.status
+        headerContentTask.appendChild(todoStatus)
+        
+        // ESCREVENDO O CONTEÚDO DO BODY DA TASK
+        const todoDescription = document.createElement('p')
+        todoDescription.classList.add('description-task')
+        todoDescription.innerText = task.description
+        bodyContentTask.appendChild(todoDescription)
 
-
-
-// EVENTOS DO DOCUMENTO
-
-    // ESCUTANDO O CARREGAMENTO DO DOCUMENTO E OCULTANDO O ELEMENTO DE TASK SE AINDA ESTIVER VAZIO
-        document.addEventListener("DOMContentLoaded", function () {
-            todoTaskList.style.overflowY = 'hidden'
-            todoTaskList.style.display = 'flex'
-            validateLocalStorage()
-        });
-
-
-    // ESCUTANDO O CLICK DO BOTÃO ADD-TASK E EXECUTANDO SUAS FUNÇÕES
-        document.addEventListener('click', (e)=>{
-            e.preventDefault()
-            switch (e.target.id){
-
-                case 'add-button':
-                    validadeInputsFormAddTask()
-                    renderTask()
-                    break
-
-                case 'todo-cancel-edit':
-                    toggleForms()
-                    break
-
-                case 'todo-save-edit':
-                    arrayTodoList.forEach((e)=>{
-                        if (e.id === editCurrentId){
-                            e.title = titleEditInput.value
-                            e.description = descriptionEditInput.value
-                            console.log(arrayTodoList)
-                        }                        
-                    })                  
-                    renderLocalStorage(JSON.stringify(arrayTodoList))
-                    renderTask()
-                    toggleForms()
-                break
-            }
+        const buttonControllerArea = document.createElement('div')
+        buttonControllerArea.classList.add('button-controller-area')
+        bodyContentTask.appendChild(buttonControllerArea)
 
 
-        // CONTROLE DOS BOTÕES DA TASK
-            const targetEl = e.target
-            const parentEl = targetEl.parentNode.parentNode
+        // CRIANDO OS BOTÕES DE CONTROLE DA TASK
 
-            switch (targetEl.className) {
-                case 'btn-done':
-                    parentEl.classList.toggle('done')
-                    if (parentEl.classList.contains('done')) {
-                        parentEl.childNodes[0].childNodes[0].childNodes[1].innerText = 'done'
-                        // console.log(parentEl.id)
-                    }else{
-                        parentEl.childNodes[0].childNodes[0].childNodes[1].innerText = 'to-do'
-                        // console.log(parentEl)
-                    }
-                    break;
+            // DONE BUTTON
+            const doneBtn = document.createElement('button')
+            doneBtn.classList.add('finish-todo')
+            doneBtn.setAttribute('id', `doneBtn${task.id}`)
+            doneBtn.innerHTML = '<i class="fa-solid fa-check"></i>'
+            buttonControllerArea.appendChild(doneBtn)
 
-                case 'btn-edit':
-                    const parent = parentEl.getAttribute('id')
-                    // console.log('Você clicou no card:', parent)
-                    // console.log('Você clicou no card:', parentEl)
-                    // console.log(arrayTodoList)
-                    arrayTodoList.forEach((e)=>{
-                        // console.log(e.id)
-                        if (e.id === parseInt(parent)){
-                            titleEditInput.value = e.title
-                            descriptionEditInput.value = e.description
-                        }
-                    })
+            // EDIT BUTTON
+            const editBtn = document.createElement('button')
+            editBtn.classList.add('edit-todo')
+            editBtn.setAttribute('id', `editBtn${task.id}`)
+            editBtn.innerHTML = '<i class="fa-solid fa-pen-to-square"></i>'
+            buttonControllerArea.appendChild(editBtn)
 
-                    console.log(taskLocalStorage)
-                    editCurrentId = parseInt(parent)
-                    toggleForms()
-                    break;
+            // DELETE BUTTON
+            const deleteBtn = document.createElement('button')
+            deleteBtn.classList.add('delete-todo')
+            deleteBtn.setAttribute('id', `deleteBtn${task.id}`)
+            deleteBtn.innerHTML = '<i class="fa-solid fa-trash"></i>'
+            buttonControllerArea.appendChild(deleteBtn)
 
-                case 'btn-remove':
-                    
-                    let indexId
-                    arrayTodoList.forEach((e)=>{
-                        if (e.id === parseInt(parentEl.getAttribute('id')))  {
-                            indexId = e.id
-                        }
-                    })
-                    if (arrayTodoList.length > 1) {
-                        arrayTodoList.splice(indexId,1)
-                        renderLocalStorage(JSON.stringify(arrayTodoList))
-                        renderTask()
-                    }else {
-                        arrayTodoList.pop()
-                        arrayTodoList.push({
-                            0:'Não existe nenhuma tarefa'
-                        })
-                        renderLocalStorage(JSON.stringify(arrayTodoList))
-                        renderTask('')
-                    }
-                    break;
-            
-                default:
-                    break;
-            }
-            
-            
-    })
+        // LIMPAMOS OS INPUTS DE INSERIR TASK E SETANDO O CURSOR NO CAMPO TITLE
+        todoTitleInputTask.value = ''
+        todoDescriptionInputTask.value = ''
+        todoTitleInputTask.focus()
+    }
 
-    // cancelEditBtn.addEventListener('click', (e)=>{
-    //     e.preventDefault()
-    //     toggleForms()
-    // })
+    // FUNÇÃO QUE SALVA OS DADOS DA TASK
+    function saveDataTask(title, description, data) {
 
-// FUNÇÕES DA APLICAÇÃO
+        // CRIAÇÃO DA VARIÁVEL QUE VAI RECEBER O OBJETO TASK
+        let task;
 
+        // OBJETO TASK
+        task = {
+            id: autoIncrementId(data),
+            title: title,
+            description: description,
+            status: 'to-do'
+        }
 
-// CRIANDO A TASK E PASSANDO PARA O DOM
-    
-    // FUNÇÃO QUE CRIA OS ELEMENTOS ATRAVÉS DO DOM (ELEMENTO POR ELEMENTO)
-        function createTask(title, description){
-        // ADICIONANDO A TAREFA NA LISTA DE TAREFAS
-            if (arrayTodoList[0] === null || typeof(arrayTodoList[0]) === 'string'){
-                arrayTodoList.pop()
-                console.log('igual a 0')
-                arrayTodoList.push({
-                    id: arrayTodoList.length,
-                    title: title,
-                    description: description
-                })
+        // INSERINDO O OBJETO NA LISTA DE TASK
+        data.push(task)
+
+        // RENDERIZANDO OS DADOS NO DOM
+        renderTodo(data)
+    }
+
+    // FUNÇÃO QUE AUTO INCREMENTA OS VALORES DO ID
+    function autoIncrementId(data) {
+        let id = data.length
+        return id
+    }
+
+    // FUNÇÃO QUE RENDERIZA OS DADOS DAS TAREFAS ATUALIZADOS, EXIBINDO-OS NO DOM
+    function renderTodo(data) {
+
+        // RECARREGANDO A LISTA DE TASK (ZERANDO TODOS OS VALORES NO DOM E RECARREGANDO COM OS DADOS ATUALIZADOS)
+        todoListTask.innerHTML = ''
+
+        // PERCORREMOS CADA ITEM DA LISTA DA TASK E BUSCAMOS O VALOR QUE ESTA NO CAMPO STATUS, DE ACORDO COM O VALOR ELE RENDERIZA O ELEMENTO COM A CLASSE "DONE" OU NÃO.
+        for (task of data){
+            if (task.status === 'to-do'){
+                saveTodo(task)
             } else {
-                let indexId;
-                arrayTodoList.forEach((e)=>{
-                    indexId = e.id
-                })
-
-                if (typeof(arrayTodoList[0][0]) === 'string'){
-                    arrayTodoList.pop()
-                    arrayTodoList.push({
-                        id: arrayTodoList.length,
-                        title: title,
-                        description: description
-                    })
-                } else {
-                    console.log('Não é um texto')
-                    arrayTodoList.push({
-                        id: indexId+1,
-                        title: title,
-                        description: description
-                    })
-                }
-            }
-        // SETANDO OS DADOS NO LOCAL STORAGE
-            renderLocalStorage(JSON.stringify(arrayTodoList))
-
-        // LIMPANDO OS INPUTS 
-            titleTaskInput.value = ''
-            descriptionTaskInput.value = ''
-
-        // SETANDO O INPUT TITULO COM FOCO
-            titleTaskInput.focus()
-
-        // RENDERIZAR NA PÁGINA
-        }
-    
-    // RENDERIZANDO O TAREFA NO DOCUMENTO HMTL
-        async function renderTask(msg){
-            todoTaskList.innerHTML = ''
-            // console.log(arrayTodoList.length)
-            arrayTodoList.forEach((e)=>{
-                if (msg === undefined){
-                        // CRIANDO O ELEMENTO TO-DO 
-                            const todo  = document.createElement('div')
-                            todo.classList.add('todo')
-                            todo.setAttribute('id', `${e.id}`)
-                            todoTaskList.appendChild(todo)
-                
-                        // CRIANDO O ELEMENTO TO-DO TEXT ITENS
-                            const todoTextItens = document.createElement('div')
-                            todoTextItens.classList.add('todo-text-itens')
-                            todo.appendChild(todoTextItens)
-                
-                        // CRIANDO O ELEMENTO TO-DO TEXT ITENS
-                            const headerContentTask = document.createElement('div')
-                            headerContentTask.classList.add('header-content-task')
-                            todoTextItens.appendChild(headerContentTask)
-                
-                        // CRIANDO O ELEMENTO TO-DO TEXT ITENS
-                            const titleTask = document.createElement('h3')
-                            const itemInfo = document.createElement('div')
-                            itemInfo.classList.add('item-info')
-                            headerContentTask.appendChild(titleTask)
-                            headerContentTask.appendChild(itemInfo)
-                            titleTask.innerText = `${e.title}`
-                            // console.log(todo)
-                
-                        // CRIANDO O ELEMENTO QUE RECEBE A INFORMAÇÃO DO STATUS DA TASK
-                            const pItemInfo = document.createElement('p')
-                            itemInfo.appendChild(pItemInfo)
-                            pItemInfo.innerText = 'to-do'
-                
-                        // CRIANDO O ELEMENTO COM A DESCRIÇÃO DA TASK
-                            const descriptionTask = document.createElement('p')
-                            descriptionTask.classList.add('description-task')
-                            todoTextItens.appendChild(descriptionTask)
-                            descriptionTask.innerHTML = `${e.description}`
-                
-                        // CRIANDO O ELEMENTO DIV QUE RECEBERÁ OS BOTÕES
-                            const buttonActionarrayTodo = document.createElement('div')
-                            buttonActionarrayTodo.classList.add('button-action-todo-list')
-                            todo.appendChild(buttonActionarrayTodo)
-                
-                        // CRIANDO OS BOTÕES DA TASK
-                            const btnDone = document.createElement('button')
-                            btnDone.classList.add('btn-done')
-                            buttonActionarrayTodo.appendChild(btnDone)
-                            btnDone.setAttribute('name', 'done-task-button')
-                
-                            const btnEdit = document.createElement('button')
-                            btnEdit.classList.add('btn-edit')
-                            buttonActionarrayTodo.appendChild(btnEdit)
-                            btnEdit.setAttribute('name', 'edit-task-button')
-                
-                            const btnRemove = document.createElement('button')
-                            btnRemove.classList.add('btn-remove')
-                            buttonActionarrayTodo.appendChild(btnRemove)
-                            btnRemove.setAttribute('name', 'remove-task-button')
-                
-                        // CRIANDO OS ICONES DOS BOTÕES
-                            const iconBtnDone = document.createElement('i')
-                            iconBtnDone.classList.add('fa-solid')
-                            iconBtnDone.classList.add('fa-check')
-                            btnDone.appendChild(iconBtnDone)
-                
-                            const iconBtnEdit = document.createElement('i')
-                            iconBtnEdit.classList.add('fa-solid')
-                            iconBtnEdit.classList.add('fa-pen-to-square')
-                            btnEdit.appendChild(iconBtnEdit)
-                
-                            const iconBtnRemove = document.createElement('i')
-                            iconBtnRemove.classList.add('fa-solid')
-                            iconBtnRemove.classList.add('fa-xmark')
-                            btnRemove.appendChild(iconBtnRemove)
-                
-                        // ORGANIZANDO OS ITENS DA LISTA DE TAREFAS
-                            heightTodo = todoTaskList.getBoundingClientRect()
-                            heightTodo = Math.round(heightTodo.height)
-                            if (heightTodo > 116){
-                                todoTaskList.style.overflowY = 'scroll'
-                            }
-                        } else {
-                            const todo  = document.createElement('div')
-                            todo.classList.add('hide')
-                        }
-                    })
-                }
-
-
-    // FUNÇÃO DE VALIDAÇÃO DOS CAMPOS PARA ADICIONAR AS TAREFAS.
-        function validadeInputsFormAddTask(){
-            if (titleTaskInput.value == '' || descriptionTaskInput.value == '') {
-                alert('Não pode haver campos vazios')
-                titleTaskInput.focus()
-            } else {
-                createTask(titleTaskInput.value, descriptionTaskInput.value)
+                saveTodo(task, task.status)
             }
         }
 
-    // FUNÇÃO QUE TROCA O MODO DE VISUALIZAÇÃO DOS FORMS (ADD-TASK E EDIT-TASK)
-        function toggleForms() {
-            formEditTask.classList.toggle('hide')
-            formAddTask.classList.toggle('hide')
-            toolbar.classList.toggle('hide')
-
-            if (todoTaskList.style.display === 'flex'){
-                todoTaskList.style.display = 'none'
-            }else {
-                todoTaskList.style.display = 'flex'
-            }      
-        }
+        // LIMPAMOS OS INPUTS DE INSERIR TASK E COLOCAMOS O CURSOS NO CAMPO TITLE
+        todoTitleInputTask.value = ''
+        todoDescriptionInputTask.value = ''
+        todoTitleInputTask.focus()
+    }
 
 
-    function cancelEditForm() {
-        cancelEditBtn.addEventListener('click', (e)=>{
-            e.preventDefault()
-            toggleForms()
+    // FUNÇÃO ALTERNA ENTRE O MODO DE ADIÇÃO E EDIÇÃO DAS TASK.
+    function toggleEditMode(){
+
+        todoEditTask.classList.toggle('hide')
+        todoAddTask.classList.toggle('hide')
+        todoSearch.classList.toggle('hide')
+        todoListTask.classList.toggle('hide')
+
+    }
+
+    // FUNÇÃO QUE BUSCA QUAL A TASK QUE ESTA SENDO E EDITADA
+    function openEditMode(id){
+        let title = todoEditTitleTask
+        let description = todoEditDescriptionTask
+
+        data.forEach((task)=>{
+            if (task.id === id){
+                title.value = task.title
+                description.value = task.description
+            }
+        })
+        
+        btnCancelEditTask.addEventListener('click', toggleEditMode)
+
+        
+        btnSaveEditTask.addEventListener('click', ()=> {
+            saveEditTask(id)
         })
     }
 
+    // FUNÇÃO QUE SALVA OS DADOS ATUALIZADAS DA TASK EDITADA
+    function saveEditTask(id){
 
-    function getlastId(){
-        let id;
-        if (arrayTodoList.length === 0){
-            createTask({0:0})
-        } else {
-            arrayTodoList.forEach((e)=> {
-                id = e.id
-            })
+        let title = todoEditTitleTask.value
+        let description = todoEditDescriptionTask.value
+
+        data.forEach((task)=>{
+            if (task.id === id){
+                task.title = title
+                task.description = description
+                console.log(task)
+            }
+        })
+
+        data.forEach((element)=>{
+            console.log(element)
+        })
+
+    }
+
+// EVENTOS
+
+    // EVENDO DE ESCUTA DO FORMULÁRIO DE ADICIONAR TASK
+    todoAddTask.addEventListener("submit", (element)=>{
+        element.preventDefault()
+        const titleAddTask = todoTitleInputTask.value
+        const descriptionAddTask = todoDescriptionInputTask.value
+        if (titleAddTask && descriptionAddTask){
+            saveDataTask(titleAddTask, descriptionAddTask, data)
         }
+    })
+
+    // EVENTO QUE ESCUTA O BOTÃO DE CONTROLE "FINISH-TODO"
+    document.addEventListener('click', (element) => {
+
+        // PEGANDO O ELEMENTO CLICADO
+        const btnClicked = element.target
         
-        return parseInt(id)+1
-    }
+        // IDENTIFICANDO O ID DA ELEMENTO
+        let id
+        for (character of btnClicked.id){
+            id = parseInt(character)
+        }
 
-    function renderLocalStorage(arr){
-        localStorage.setItem('TaskList', arr)
-    }
 
-    function validateLocalStorage(){
-        if (localStorage.getItem('TaskList') === null){
-            console.log('É sua primeira vez navegando, registe uma tarefa')
-            arrayTodoList.push(null)
-            renderLocalStorage(arrayTodoList)
-            console.log(arrayTodoList) 
-            console.log(arrayTodoList.length) 
-            console.log('IF')     
-        } else if (localStorage.getItem('TaskList') === undefined || localStorage.getItem('TaskList') === ''){
-            console.log(localStorage.getItem('TaskList'))
-            arrayTodoList.push({0:null})
-        } else {
-            let data = JSON.parse(localStorage.getItem('TaskList'))
-            data.forEach((e)=>{
-                arrayTodoList.push(e)
-            })
-            if (typeof(arrayTodoList[0][0]) === 'string'){
-                renderTask('')
-            }else {
-                // console.log(arrayTodoList[0][0])
-                renderTask()
+        // VERIFICANDO SE O ELEMENTO CLICADO É O BOTÃO DE FINALIZAR A TASK
+        if (btnClicked.classList.contains('finish-todo')){
+
+            // PERCORRE A LISTA DE TASK E COMPARA QUAL O VALOR DE STATUS, AO IDENTIFICAR O VALOR ALTERA OU INSERE DE ACORDO COM A OPÇÃO.
+            for (task of data){
+
+                // SE O ID DA TASK FOR IGUAL AO ID DO BOTÃO ELE DEVE ALTERAR
+                if (task.id === id){
+
+                    // SE O VALOR DO CAMPO STATUS FOR IGUAL A "DONE", DEVE SER ALTERADO PARA "TO-DO"
+                    if (task.status === 'done'){
+                        task.status = 'to-do'
+                        renderTodo(data)
+                    }
+                    // DO CONTRÁRIO DEVE INSERIR O VALOR "DONE" NO CAMPO STATUS
+                    else {
+                        task.status = 'done'
+                        renderTodo(data)
+                    }
+                }
             }
         }
-    }
 
+        // VERIFICANDO SE O ELEMENTO CLICADO É O BOTÃO DE EDITAR
+        if (btnClicked.classList.contains('edit-todo')){
+            openEditMode(id)
+            toggleEditMode()
+        }
+        
 
+        // VERIFICANDO SE O ELEMENTO CLICADO É O BOTÃO DE DELETAR
+        if (btnClicked.classList.contains('delete-todo')){
+            let newData = []
+            for (task of data){
+                if (task.id !== id){
+                    newData.push(task)
+                    
+                }
+            }
+            data = newData
+            renderTodo(newData)
+        }
 
+    })

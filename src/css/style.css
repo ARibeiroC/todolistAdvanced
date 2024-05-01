@@ -212,10 +212,13 @@ option {
     margin-top: 1rem;
     flex: 3;
     height: 100px;
+    overflow-y: scroll;
+    max-height: 100%;
 }
 
 .todo {
     display: flex;
+    flex-direction: column;
     padding: .4rem;
 
     border-radius: 5px;
@@ -223,35 +226,38 @@ option {
     border: 1px solid;
 }
 
-.todo-text-itens {
-    display: flex;
-    flex-direction: column;
-    flex: 1;
-    gap: .2rem;
-
-    padding: 0 .2rem;
-    min-height: 100%;
-}
-
 .header-content-task {
     display: flex;
     justify-content: space-between;
     align-items: center;
 
-    padding: .2rem;
+    padding: .4rem .2rem;
+    gap: .4rem;
+    border-bottom: 1px dashed;
+}
+
+.body-content-task {
+    display: flex;
+    justify-content: space-between;
+    flex: 1;
+    gap: .2rem;
+
+    padding: .4rem;
+    min-height: 100%;
 }
 
 h3 {
     display: flex;
     align-items: center;
 
+    flex: 1;
     color: #e39b56;
     font-weight: bold;
     font-size: 1rem;
     height: 15px;
 }
 
-.item-info {
+.task-info {
     display: flex;
     align-items: center;
 
@@ -263,33 +269,34 @@ h3 {
     border: 1px solid cornflowerblue;
 }
 
-.description-task {
+.description-task {    
     padding: .2rem;
     font-size: .8rem;
     border: 1px dashed #999;
     border-radius: 5px;
     border-style: inset;
-    height: 100%;
+    width: 90%;
+    overflow-y: scroll;
+    height: 80px;
 }
 
-.button-action-todo-list {
+.button-controller-area {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: .1rem;
-    flex: .1;
+    justify-content: space-between;
 
-    padding: .1rem .2rem;
+    width: 10%;
 }
 
-.button-action-todo-list button {
+.button-controller-area button {
     width: 25px;
     height: 25px;
     border-radius: 5px;
     border-width: 1px;
 }
 
-.button-action-todo-list button i {
+.button-controller-area button i {
     pointer-events: none;
 }
 
