@@ -1,5 +1,5 @@
-function setLocalStorage(data){        
-    localStorage.setItem('task', data)
+function setLocalStorage(tasklist){        
+    localStorage.setItem('task', tasklist)
 }
 
 function getLocalStorage(){
@@ -11,7 +11,7 @@ function getLocalStorage(){
 
 function jsonForObject(){
     if (getLocalStorage() != undefined){
-        let object = JSON.parse(getLocalStorage())
+        let object = JSON.parse(getLocalStorage('task'))
         return object
     } else {
         console.log(getLocalStorage())

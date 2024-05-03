@@ -2,9 +2,9 @@ import { renderTodo } from './renderTodo.js'
 import { getLocalStorage } from './moduleStorage.js'
 import { inputSearch, filterSelect } from './elementsHtml.js'
 
-const dataStorage = JSON.parse(getLocalStorage('task'))
 
 function filterTodos(filterValue){
+    const dataStorage = JSON.parse(getLocalStorage('task'))
 
     switch (filterValue){
         case "all":
@@ -29,7 +29,7 @@ function filterTodos(filterValue){
 }
 
 function searchTask(title, filterValue){
-    
+    const dataStorage = JSON.parse(getLocalStorage('task'))
     console.log(`title: ${title}`)
     console.log(`filterValue: ${filterValue}`)
 

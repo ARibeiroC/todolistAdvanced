@@ -7,8 +7,7 @@ import { saveDataTask } from "./saveTodo.js"
 import { setLocalStorage, getLocalStorage } from  "./moduleStorage.js"
 
 // GLOBAL VARIABLES
-let data = []
-let id = 0
+const data = []
 
 // SELEÇÃO DE ELEMENTOS DO DOM
 const todoAddTask = document.querySelector("#form-add-task")
@@ -46,13 +45,13 @@ const filterSelect = document.querySelector('#filter-select')
 
     // FUNÇÃO QUE BUSCA QUAL A TASK QUE ESTA SENDO E EDITADA
     function openEditMode(identify){
+        let dataStorage = JSON.parse(getLocalStorage('task'))
         let id = todoEditIdTask
         let title = todoEditTitleTask
         let description = todoEditDescriptionTask
 
-        data.forEach((task)=>{
+        dataStorage.forEach((task)=>{
             if (task.id === identify){
-                console.log(task.id)
                 id.value = task.id
                 title.value = task.title
                 description.value = task.description
@@ -62,25 +61,24 @@ const filterSelect = document.querySelector('#filter-select')
 
     // FUNÇÃO QUE SALVA OS DADOS ATUALIZADAS DA TASK EDITADA
     function saveEditTask(){
-
+        let dataStorage = JSON.parse(getLocalStorage('task'))
         let id = parseInt(todoEditIdTask.value)
         let title = todoEditTitleTask.value
         let description = todoEditDescriptionTask.value
 
-        data.forEach((task)=>{
+        dataStorage.forEach((task)=>{
             if (task.id === id){
                 task.title = title
                 task.description = description
-                renderTodo(data)
-                setLocalStorage(JSON.stringify(data))
-                toggleEditMode()
             }
+            
+            data.push(task)
+            console.log(data)
+            renderTodo(data)
+            setLocalStorage(JSON.stringify(data))
         })
-        console.log('--------------')
-        data.forEach((element)=>{
-            console.log(element)
-        })
-
+        
+        toggleEditMode()
     }
 
 
@@ -88,17 +86,13 @@ const filterSelect = document.querySelector('#filter-select')
 // EVENTOS
     // EVENTO QUE ESCUTA SE O CONTEÚDO DA PÁGINA FOI CARREGADO
     document.addEventListener("DOMContentLoaded", ()=>{
-        
-        if (!sessionStorage.key(1)) {
+        if (sessionStorage.getItem('FirstVisit') == null) {
            sessionStorage.setItem('FirstVisit', false)
-           setLocalStorage(undefined)
+           setLocalStorage([])
         } else {
-            let dataStorage = JSON.parse(getLocalStorage())
-            if (dataStorage != undefined){
-                dataStorage.forEach(e => {
-                    data.push(e)
-                    renderTodo(data)
-                })
+            if (localStorage.getItem('task') != ''){
+                let dataStorage = JSON.parse(getLocalStorage('task'))
+                renderTodo(dataStorage)
             }
         }
     })
@@ -174,22 +168,25 @@ const filterSelect = document.querySelector('#filter-select')
 
         // VERIFICANDO SE O ELEMENTO CLICADO É O BOTÃO DE EDITAR
         if (btnClicked.classList.contains('edit-todo')){
-            openEditMode(id)
             toggleEditMode()
+            openEditMode(id)
         }
         
 
         // VERIFICANDO SE O ELEMENTO CLICADO É O BOTÃO DE DELETAR
         if (btnClicked.classList.contains('delete-todo')){
             let newData = []
-            for (task of data){
+            data.forEach((task)=>{
                 if (task.id !== id){
                     newData.push(task)
                 }
-            }
-            data = newData
-            renderTodo(data)
-            setLocalStorage(JSON.stringify(data))
+            })
+            console.log(newData)
+            renderTodo(newData)
+            setLocalStorage(JSON.stringify(newData))
         }
 
     })
+
+
+export { data as default }

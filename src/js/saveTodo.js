@@ -86,16 +86,18 @@ function saveTodo(task, status = 'to-do') {
 function saveDataTask(title, description, data) {
 
     // CRIAÇÃO DA VARIÁVEL QUE VAI RECEBER O OBJETO TASK
-    let task;
+    let task
+    let increment = autoIncrementId()
 
     // OBJETO TASK
+    console.log(increment)
     task = {
-        id: autoIncrementId(),
+        id: increment,
         title: title,
         description: description,
         status: 'todo'
     }
-
+    console.log(task)
     // INSERINDO O OBJETO NA LISTA DE TASK
     data.push(task)
     setLocalStorage(JSON.stringify(data))
