@@ -11,11 +11,48 @@ body {
     display: flex; 
     align-items: center; 
     min-height: 100vh; 
-    background: url('../img/background.jpg') no-repeat fixed center; 
+    /* background: url('../img/background.jpg') no-repeat fixed center;  */
     background-size: cover; 
     backdrop-filter: blur(10px); 
     color: #111; 
 }
+
+body::before{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    content: 'EM DESENVOLVIMENTO';
+    position: absolute;
+    width: 100vw;
+    height: 45px;
+    top: 10px;
+    left: 0;
+    background-color: #ff7070;
+    color: white;
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+.btnTest{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    content: '<input type=button>';
+    position: absolute;
+    width: 100vw;
+    height: 45px;
+    top: 60px;
+    left: 0;
+    background-color: #ff7070;
+    color: white;
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+.btnTest button {
+    padding: .6rem;
+}
+
 
 #todo-container { display: flex; flex-direction: column;
 
@@ -184,7 +221,7 @@ text-align: center;
     padding: .4rem .6rem;
 }
 
-#search form {
+#search #form {
     display: flex;
 }
 
@@ -206,12 +243,10 @@ option {
 /* CONFIGURAÇÕES DOS CARDS DAS TAREFAS */
 #todo-task-list {
     flex-direction: column;
-    gap: .2rem;
 
     padding: .6rem .2rem;
-    margin-top: 1rem;
     flex: 3;
-    height: 100px;
+    max-height: 200px;
     overflow-y: scroll;
     max-height: 100%;
 }
@@ -224,6 +259,7 @@ option {
     border-radius: 5px;
     background-color: #fdfdfd;
     border: 1px solid;
+    margin-bottom: .4rem;
 }
 
 .header-content-task {
@@ -310,10 +346,8 @@ text-decoration: line-through;
 color: #999;
 }
 
-.done .item-info {
-    background-color: transparent;
-    border: 1px solid white;
-    color: chartreuse;
+.done .task-info{
+    background-color: chartreuse;
 }
 
 input:hover, button:hover, select:hover {
@@ -403,11 +437,11 @@ input:hover, button:hover, select:hover {
             order: 2;
         }
 
-        #search form .form-inputs-control {
+        #search #form .form-inputs-control {
             margin-right: .2rem;
         }
 
-        #search form .form-buttons-control {
+        #search #form .form-buttons-control {
             justify-content: center;
             align-items: center;
         }

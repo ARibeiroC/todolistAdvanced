@@ -6,8 +6,7 @@
     <title>To-Do List | Avançado</title>
 
     <!-- Javascript -->
-    <script src="src/js/script.js" defer></script>
-
+    <script src="src/js/script.js" defer type="module"></script>
     <!-- Css / Sass -->
     <link rel="stylesheet" href="src/css/style.css">
 
@@ -16,6 +15,7 @@
     
 </head>
 <body>
+    <div class="btnTest"><button type="button">Clique Aqui</button></div>
     <section id="todo-container">
         <header>
             <h2>To-Do Advanced</h2>
@@ -24,6 +24,7 @@
             <p class="subtitle">Add your new task</p>
             <div class="todo-form-control" >
                 <div class="form-inputs-control">
+                    <input type="hidden" id="todo-id-task">
                     <input type="text" id="todo-title-task" placeholder="Title task">
                     <input type="text" id="todo-description-task" placeholder="What do you want doing?">
                 </div>
@@ -38,6 +39,7 @@
             <p class="subtitle">Editing your task</p>
             <div class="edit-form-control">
                 <div id="editing-inputs">
+                    <input type="hidden" id="todo-editing-id-task">
                     <input type="text" id="todo-editing-title-task" placeholder="Title task">
                     <input type="text" id="todo-editing-description-task" placeholder="What do you want doing?">
                 </div>
@@ -48,19 +50,19 @@
             </div>          
         </form>
         <div id="toolbar" class="todo-form">
-            <div id="search">
+            <form id="search">
                 <h4 class="subtitle">Search:</h4>
-                <form>
+                <div id="form">
                     <div class="form-inputs-control">
-                        <input type="text" placeholder="Find your task">
+                        <input type="text" placeholder="Find your task" id="input-search">
                     </div>
                     <div class="form-buttons-control">
-                        <button id="erase-search" name="erase-search-button" class="btnControl">
-                            <i class="fa-solid fa-circle-arrow-left"></i>
+                        <button type="submit" id="erase-search" name="erase-search-button" class="btnControl">
+                            <i class="fa-solid fa-magnifying-glass"></i>
                         </button>
                     </div>
-                </form>
-            </div>
+                </div>
+            </form>
             <div id="filter">
                 <h4 class="subtitle">Filtrar:</h4>
                 <select id="filter-select">
