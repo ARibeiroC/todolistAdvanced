@@ -86,12 +86,16 @@ const filterSelect = document.querySelector('#filter-select')
 // EVENTOS
     // EVENTO QUE ESCUTA SE O CONTEÚDO DA PÁGINA FOI CARREGADO
     document.addEventListener("DOMContentLoaded", ()=>{
+        // VERIFICA SE EXISTE NA SESSION STORAGE A CHAVE 'FirstVisit' E SE SEU VALOR É NULL
         if (sessionStorage.getItem('FirstVisit') == null) {
            sessionStorage.setItem('FirstVisit', false)
            setLocalStorage([])
         } else {
             if (localStorage.getItem('task') != ''){
                 let dataStorage = JSON.parse(getLocalStorage('task'))
+                dataStorage.forEach((task)=>{
+                    data.push(task)
+                })
                 renderTodo(dataStorage)
             }
         }
@@ -144,12 +148,8 @@ const filterSelect = document.querySelector('#filter-select')
         if (btnClicked.classList.contains('finish-todo')){
 
             // PERCORRE A LISTA DE TASK E COMPARA QUAL O VALOR DE STATUS, AO IDENTIFICAR O VALOR ALTERA OU INSERE DE ACORDO COM A OPÇÃO.
-            for (task of data){
-                // console.log(task)
-                // console.log(id)
-                // SE O ID DA TASK FOR IGUAL AO ID DO BOTÃO ELE DEVE ALTERAR
+            for (let i; i < data.length; i++){
                 if (task.id === id){
-                    console.log('é igual')
                     // SE O VALOR DO CAMPO STATUS FOR IGUAL A "DONE", DEVE SER ALTERADO PARA "TO-DO"
                     if (task.status === 'done'){
                         task.status = 'todo'
