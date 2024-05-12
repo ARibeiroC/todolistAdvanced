@@ -141,14 +141,13 @@ const filterSelect = document.querySelector('#filter-select')
         if (btnClicked.getAttribute('id') === 'erase-search'){
             element.preventDefault()
             searchTask(inputSearch.value, filterSelect.value)
-            // console.log(inputSearch.value, filterSelect.value)
         }
 
         // VERIFICANDO SE O ELEMENTO CLICADO É O BOTÃO DE FINALIZAR A TASK
         if (btnClicked.classList.contains('finish-todo')){
 
             // PERCORRE A LISTA DE TASK E COMPARA QUAL O VALOR DE STATUS, AO IDENTIFICAR O VALOR ALTERA OU INSERE DE ACORDO COM A OPÇÃO.
-            for (let i; i < data.length; i++){
+            data.forEach((task)=>{
                 if (task.id === id){
                     // SE O VALOR DO CAMPO STATUS FOR IGUAL A "DONE", DEVE SER ALTERADO PARA "TO-DO"
                     if (task.status === 'done'){
@@ -163,7 +162,9 @@ const filterSelect = document.querySelector('#filter-select')
                         setLocalStorage(JSON.stringify(data))
                     }
                 }
-            }
+            })
+            // for (let i; i < data.length; i++){
+            // }
         }
 
         // VERIFICANDO SE O ELEMENTO CLICADO É O BOTÃO DE EDITAR
