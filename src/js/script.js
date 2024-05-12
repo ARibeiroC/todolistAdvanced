@@ -133,7 +133,6 @@ const filterSelect = document.querySelector('#filter-select')
         
         // IDENTIFICANDO O ID DA ELEMENTO
         let id
-        let task
         for (let character of btnClicked.id){
             id = parseInt(character)
         }
@@ -163,8 +162,6 @@ const filterSelect = document.querySelector('#filter-select')
                     }
                 }
             })
-            // for (let i; i < data.length; i++){
-            // }
         }
 
         // VERIFICANDO SE O ELEMENTO CLICADO É O BOTÃO DE EDITAR
