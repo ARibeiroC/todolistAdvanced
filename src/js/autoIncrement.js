@@ -9,7 +9,7 @@ export function autoIncrementId() {
         })
         return id = id + 1
     } else {
-        id = 1
+        id = 0
         return id
     }
 }

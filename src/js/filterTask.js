@@ -1,6 +1,5 @@
 import { renderTodo } from './renderTodo.js'
 import { getLocalStorage } from './moduleStorage.js'
-import { inputSearch, filterSelect } from './elementsHtml.js'
 
 
 function filterTodos(filterValue){

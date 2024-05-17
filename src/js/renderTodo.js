@@ -1,5 +1,5 @@
 import { todoListTask } from './elementsHtml.js'
-import { saveTodo } from './saveTodo.js'
+import { saveTodoTask } from './saveTodo.js'
 
 function renderTodo(data) {
 
@@ -7,13 +7,13 @@ function renderTodo(data) {
     todoListTask.innerHTML = ''
 
     // PERCORREMOS CADA ITEM DA LISTA DA TASK E BUSCAMOS O VALOR QUE ESTA NO CAMPO STATUS, DE ACORDO COM O VALOR ELE RENDERIZA O ELEMENTO COM A CLASSE "DONE" OU NÃO.
-    for (let task of data){
+    data.forEach((task)=>{
         if (task.status === 'to-do'){
-            saveTodo(task)
+            saveTodoTask(task)
         } else {
-            saveTodo(task, task.status)
+            saveTodoTask(task, task.status)
         }
-    }
+    })
 }
 
 export { renderTodo }
