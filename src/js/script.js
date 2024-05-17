@@ -53,7 +53,7 @@ const filterSelect = document.querySelector('#filter-select')
         const titleAddTask = todoTitleInputTask.value
         const descriptionAddTask = todoDescriptionInputTask.value
         if (titleAddTask && descriptionAddTask){
-            saveDataTask(titleAddTask, descriptionAddTask, data)
+            saveDataTask(titleAddTask, descriptionAddTask, dataFrame)
 
             // LIMPAMOS OS INPUTS DE INSERIR TASK E COLOCAMOS O CURSOS NO CAMPO TITLE
             todoTitleInputTask.value = ''
