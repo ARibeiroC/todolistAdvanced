@@ -91,7 +91,7 @@ const filterSelect = document.querySelector('#filter-select')
         if (btnClicked.classList.contains('finish-todo')){
             // FUNÇÃO PARA MUDAR O VALOR DO STATUS
             async function statusChange(){
-                await fetch(`${back4app}task`, {
+                await fetch(`${back4app}`, {
                     method: "GET",
                     headers: {'Content-type': 'application/json', 
                     "X-Parse-REST-API-Key": "5LROSgkBJzLv0yQEiepGwvOgD5hjptsXJCK4HkqF", 
