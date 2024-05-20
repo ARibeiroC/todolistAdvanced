@@ -4,11 +4,11 @@ import { renderTodo } from './renderTodo.js'
 import { saveDataTask } from "./saveTodo.js"
 import { setLocalStorage, getLocalStorage } from  "./moduleStorage.js"
 import { saveEditTask, openEditMode, toggleEditMode  } from './settingEditTodo.js'
-import { postTask } from './apiControl.js'
+import { postTask, putTask, statusChange } from './apiControl.js'
 
 // GLOBAL VARIABLES
 let dataFrame = []
-const api = 'https://ae47b0b2-515a-46c8-9850-77386934ee4e-00-2qh30ydbra79o.worf.replit.dev/'
+let back4app = 'https://parseapi.back4app.com//parse/classes/'
 
 // SELEÇÃO DE ELEMENTOS DO DOM
 const todoAddTask = document.querySelector("#form-add-task")
@@ -27,11 +27,16 @@ const filterSelect = document.querySelector('#filter-select')
     btnSaveEditTask.addEventListener('click', saveEditTask)
 
     document.addEventListener("DOMContentLoaded", ()=>{
-        const endpoint = api+'alltask'
-        fetch(endpoint)
-        .then(res=>res.json())
-        .then(data=>{
-            dataFrame = data
+        const headers = {
+            method: "GET",
+            headers: {'Content-type': 'application/json', "X-Parse-REST-API-Key": "5LROSgkBJzLv0yQEiepGwvOgD5hjptsXJCK4HkqF", "X-Parse-Application-Id": "idGULhV3R5fnsfKcgBlirH2KZPbAniZddCmZhJ2u"}
+        }
+    
+        back4app = `${back4app}task`
+        fetch(back4app, headers)
+        .then(res=> res.json())
+        .then(data=> {
+            dataFrame = data.results
             setLocalStorage(JSON.stringify(dataFrame))
             renderTodo(dataFrame)
         })
@@ -70,38 +75,52 @@ const filterSelect = document.querySelector('#filter-select')
         
         // IDENTIFICANDO O ID DA ELEMENTO
         let id
-        for (let character of btnClicked.id){
-            id = parseInt(character)
+        for (let char of btnClicked.id){
+            id = parseInt(char)
         }
 
+        // VERIFICANDO SE O ID DO BOTÃO É "erase-search"
         if (btnClicked.getAttribute('id') === 'erase-search'){
+            // IMPEDINDO O RECARREGAMENTO DA PÁGINA
             element.preventDefault()
+            // RECUPERANDO OS DADOS DOS INPUTS [SEARCH E FILTER SELECT]
             searchTask(inputSearch.value, filterSelect.value)
         }
 
         // VERIFICANDO SE O ELEMENTO CLICADO É O BOTÃO DE FINALIZAR A TASK
         if (btnClicked.classList.contains('finish-todo')){
+            // FUNÇÃO PARA MUDAR O VALOR DO STATUS
+            async function statusChange(){
+                await fetch(`${back4app}task`, {
+                    method: "GET",
+                    headers: {'Content-type': 'application/json', 
+                    "X-Parse-REST-API-Key": "5LROSgkBJzLv0yQEiepGwvOgD5hjptsXJCK4HkqF", 
+                    "X-Parse-Application-Id": "idGULhV3R5fnsfKcgBlirH2KZPbAniZddCmZhJ2u"},
+                }).then(response => response.json())
+                .then(data => {
+                    // PERCORRE A LISTA DE TASKS E VERIFICA SE É A TASK CORRETA, SE SIM ENTÃO ALTERA O VALOR DO STATUS.
+                    data.results.forEach((task)=> {
+                        if (task.code === id) {
+                            // SE O VALOR DO CAMPO STATUS FOR IGUAL A "DONE", DEVE SER ALTERADO PARA "TO-DO"
+                            if (task.status === 'done'){
+                                task.status = 'todo'                       
+                            }
+                            // DO CONTRÁRIO DEVE INSERIR O VALOR "DONE" NO CAMPO STATUS
+                            else {
+                                // ALTERANDO O STATUS DA TASK
+                                task.status = 'done'
+                            }
+                            putTask(task, task.objectId)
+                        }
+                    })
+                    renderTodo(data.results)
+                    setLocalStorage(data.results)
+                })
+            }
 
-            let data = JSON.parse(getLocalStorage())
-            // PERCORRE A LISTA DE TASKS E COMPARA QUAL O VALOR DE STATUS, AO IDENTIFICAR O VALOR ALTERA OU INSERE DE ACORDO COM A OPÇÃO.
-            dataFrame = data
-            dataFrame.forEach((task)=>{
-                // VERIFICA SE O ID DA TASK É IGUAL AO ID DO BOTÃO DA TASK
-                if (task.id === id){
-                    // SE O VALOR DO CAMPO STATUS FOR IGUAL A "DONE", DEVE SER ALTERADO PARA "TO-DO"
-                    if (task.status === 'done'){
-                        task.status = 'todo'                        
-                    }
-                    // DO CONTRÁRIO DEVE INSERIR O VALOR "DONE" NO CAMPO STATUS
-                    else {
-                        task.status = 'done'
-                    }
-                    renderTodo(dataFrame)
-                    setLocalStorage(JSON.stringify(dataFrame))
-                }
-                
-            })
-            postTask(dataFrame)
+            // let data = JSON.parse(getLocalStorage())
+            statusChange()
+
         }
 
         // VERIFICANDO SE O ELEMENTO CLICADO É O BOTÃO DE EDITAR
@@ -113,7 +132,6 @@ const filterSelect = document.querySelector('#filter-select')
 
         // VERIFICANDO SE O ELEMENTO CLICADO É O BOTÃO DE DELETAR
         if (btnClicked.classList.contains('delete-todo')){
-            console.log(dataFrame)
             if (dataFrame.length === 0){
                 console.log('Vazio')
             } else {
@@ -131,4 +149,4 @@ const filterSelect = document.querySelector('#filter-select')
     })
 
 
-export { dataFrame as default, api, dataFrame }
+export { dataFrame as default, back4app, dataFrame }

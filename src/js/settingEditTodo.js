@@ -2,7 +2,7 @@
 import { todoEditIdTask, todoEditTitleTask, todoEditDescriptionTask } from "./elementsHtml.js"
 import { getLocalStorage, setLocalStorage } from "./moduleStorage.js"
 import { todoEditTask, todoAddTask, todoSearch, todoListTask } from "./elementsHtml.js"
-import { api } from "./script.js"
+import { back4app } from "./script.js"
 import { renderTodo } from "./renderTodo.js"
 import { postTask } from './apiControl.js'
 
@@ -39,7 +39,7 @@ import { postTask } from './apiControl.js'
 // SALVA OS DADOS DAS ALTERAÇÃO E ARMAZENA NO DATAFRAME RESPONSÁVEL.
 async function saveEditTask(){
 
-    const response = await fetch(api+'alltask')
+    const response = await fetch(back4app+'task')
     .then(res=> res.json())
     let data = []
     let id = parseInt(todoEditIdTask.value)

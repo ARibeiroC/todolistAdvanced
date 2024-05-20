@@ -5,7 +5,7 @@ export function autoIncrementId() {
     let id
     if (data.length > 0){
         data.forEach((task)=>{
-            id = task.id
+            id = task.code
         })
         return id = id + 1
     } else {

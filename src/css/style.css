@@ -21,16 +21,34 @@ body::before{
     display: flex;
     align-items: center;
     justify-content: center;
-    content: 'EM DESENVOLVIMENTO';
+    content: 'TODO LIST ADVANCED';
     position: absolute;
     width: 100vw;
-    height: 45px;
+    height: auto;
     top: 10px;
     left: 0;
-    background-color: #ff7070;
+    background-color: #945bf1;
     color: white;
     font-size: 2rem;
     font-weight: bold;
+    text-align: center;
+}
+
+body::after{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    content: 'APLICAÇÃO DESENVOLVIDA PARA GERENCIAR TAREFAS';
+    position: absolute;
+    width: 100vw;
+    height: auto;
+    top: 55px;
+    left: 0;
+    background-color: #3ac7ff;
+    color: white;
+    font-size: 2rem;
+    font-weight: bold;
+    text-align: center;
 }
 
 .btnTest{

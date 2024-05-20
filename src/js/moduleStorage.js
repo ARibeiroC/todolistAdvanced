@@ -14,7 +14,6 @@ function jsonForObject(){
         let object = JSON.parse(getLocalStorage('task'))
         return object
     } else {
-        console.log(getLocalStorage())
         console.error('Items not found in localStorage')
     }
 }

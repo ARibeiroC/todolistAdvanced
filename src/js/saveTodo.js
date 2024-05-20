@@ -12,9 +12,8 @@ function saveTodoTask(task, status = 'to-do') {
 
     // CRIANDO O CARD DA TASK
     const todo = createElementHtml('div')
-    createElementCardParent(todo, todoListTask, 'todo', `${status}`, 'id', `${task.id}`)
+    createElementCardParent(todo, todoListTask, 'todo', `${status}`, 'id', `${task.code}`)
     // const todo = createElementHtml('div')
-    // console.log(todo)
     // addClass(todo, 'todo')
     // addClass(todo, `${status}`)
     // todo.setAttribute('id', task.id)
@@ -64,7 +63,7 @@ function saveTodoTask(task, status = 'to-do') {
 
         // DONE BUTTON
         const doneBtn = createElementHtml('button')
-        createElementsOfCardParent(doneBtn, buttonControllerArea, 'finish-todo', '<i class="fa-solid fa-check"></i>', 'id', `doneBtn${task.id}`)
+        createElementsOfCardParent(doneBtn, buttonControllerArea, 'finish-todo', '<i class="fa-solid fa-check"></i>', 'id', `doneBtn${task.code}`)
         // doneBtn.classList.add('finish-todo')
         // doneBtn.setAttribute('id', `doneBtn${task.id}`)
         // doneBtn.innerHTML = '<i class="fa-solid fa-check"></i>'
@@ -72,7 +71,7 @@ function saveTodoTask(task, status = 'to-do') {
 
         // EDIT BUTTON
         const editBtn = document.createElement('button')
-        createElementsOfCardParent(editBtn, buttonControllerArea, 'edit-todo', '<i class="fa-solid fa-pen-to-square"></i>', 'id', `editBtn${task.id}`)
+        createElementsOfCardParent(editBtn, buttonControllerArea, 'edit-todo', '<i class="fa-solid fa-pen-to-square"></i>', 'id', `editBtn${task.code}`)
         // editBtn.classList.add('edit-todo')
         // editBtn.setAttribute('id', `editBtn${task.id}`)
         // editBtn.innerHTML = '<i class="fa-solid fa-pen-to-square"></i>'
@@ -80,7 +79,7 @@ function saveTodoTask(task, status = 'to-do') {
 
         // DELETE BUTTON
         const deleteBtn = document.createElement('button')
-        createElementsOfCardParent(deleteBtn, buttonControllerArea, 'delete-todo', '<i class="fa-solid fa-trash"></i>', 'id', `deleteBtn${task.id}`)
+        createElementsOfCardParent(deleteBtn, buttonControllerArea, 'delete-todo', '<i class="fa-solid fa-trash"></i>', 'id', `deleteBtn${task.code}`)
         // deleteBtn.classList.add('delete-todo')
         // deleteBtn.setAttribute('id', `deleteBtn${task.id}`)
         // deleteBtn.innerHTML = '<i class="fa-solid fa-trash"></i>'
@@ -96,7 +95,7 @@ function saveDataTask(title, description, data) {
 
     // OBJETO TASK
     task = {
-        id: increment,
+        code: increment,
         title: title,
         description: description,
         status: 'todo'
@@ -108,7 +107,8 @@ function saveDataTask(title, description, data) {
     setLocalStorage(JSON.stringify(data))
     sessionStorage.setItem('IsThisFirstTime_Log_From_LiveServer', false)
     
-    postTask(data)    
+    console.log(data)
+    postTask(task) 
     
     // RENDERIZANDO OS DADOS NO DOM
     renderTodo(data)

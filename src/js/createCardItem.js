@@ -46,9 +46,6 @@ function createElementsOfCardParent(element, parenteElementHtml, nameClass = und
     showElementInHtml(parenteElementHtml, element)
 }
 
-// function createButtonTask(
-//     // createElementCardParent()
-// )
 
 export { createElementHtml, addClass, showElementInHtml, createElementCardParent, createElementsOfCardParent}
 
