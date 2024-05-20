@@ -2,9 +2,9 @@
 import { searchTask } from './filterTask.js'
 import { renderTodo } from './renderTodo.js'
 import { saveDataTask } from "./saveTodo.js"
-import { setLocalStorage, getLocalStorage } from  "./moduleStorage.js"
+import { setLocalStorage } from  "./moduleStorage.js"
 import { saveEditTask, openEditMode, toggleEditMode  } from './settingEditTodo.js'
-import { postTask, putTask, statusChange } from './apiControl.js'
+import { postTask, putTask } from './apiControl.js'
 
 // GLOBAL VARIABLES
 let dataFrame = []
