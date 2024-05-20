@@ -13,7 +13,6 @@ async function postTask(data){
         body: JSON.stringify(data)
     })
 
-    console.log(JSON.stringify(data))
     return console.log('Armazenado com sucesso')
 }
 
@@ -35,13 +34,6 @@ async function putTask(task, objectId){
         "X-Parse-REST-API-Key": "5LROSgkBJzLv0yQEiepGwvOgD5hjptsXJCK4HkqF", 
         "X-Parse-Application-Id": "idGULhV3R5fnsfKcgBlirH2KZPbAniZddCmZhJ2u"},
         body: JSON.stringify(task)
-    })
-    .then(response => console.log(response.status))
-    .then(data => {
-        console.log('Task: ', task)
-        data = task
-        console.log("data: ",data)
-        return data
     })
 
     return console.log('Alterado com sucesso')
