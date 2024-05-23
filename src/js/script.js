@@ -86,21 +86,24 @@ const filterSelect = document.querySelector('#filter-select')
         // VERIFICANDO SE O ELEMENTO CLICADO É O BOTÃO DE FINALIZAR A TASK
         if (btnClicked.classList.contains('finish-todo')){
             // FUNÇÃO PARA MUDAR O VALOR DO STATUS
-            dataFrame.forEach(task => {
-                if (task.code === id) {
-                    // SE O VALOR DO CAMPO STATUS FOR IGUAL A "DONE", DEVE SER ALTERADO PARA "TO-DO"
-                    if (task.status === 'done'){
-                        task.status = 'todo'                       
+            getAlltask().then(data=>{
+                dataFrame = data.results
+                dataFrame.forEach(task => {
+                    if (task.code === id) {
+                        // SE O VALOR DO CAMPO STATUS FOR IGUAL A "DONE", DEVE SER ALTERADO PARA "TO-DO"
+                        if (task.status === 'done'){
+                            task.status = 'todo'                       
+                        }
+                        // DO CONTRÁRIO DEVE INSERIR O VALOR "DONE" NO CAMPO STATUS
+                        else {
+                            // ALTERANDO O STATUS DA TASK
+                            task.status = 'done'
+                        }
+                        putTask(task, task.objectId)
+                        renderTodo(dataFrame)
+                        setLocalStorage(JSON.stringify(dataFrame))
                     }
-                    // DO CONTRÁRIO DEVE INSERIR O VALOR "DONE" NO CAMPO STATUS
-                    else {
-                        // ALTERANDO O STATUS DA TASK
-                        task.status = 'done'
-                    }
-                    putTask(task, task.objectId)
-                    renderTodo(dataFrame)
-                    setLocalStorage(JSON.stringify(dataFrame))
-                }
+                })
             })
         }
 
@@ -113,18 +116,21 @@ const filterSelect = document.querySelector('#filter-select')
 
         // VERIFICANDO SE O ELEMENTO CLICADO É O BOTÃO DE DELETAR
         if (btnClicked.classList.contains('delete-todo')){
-            if (dataFrame.length === 0){
-                alert("Não existe nenhuma tarefa registrada!!!")
-            } else {
-                for (let i = 0; i < dataFrame.length; i++ ){
-                    if ( dataFrame[i].code === id){
-                        deleteTask(dataFrame[i].objectId)
-                        dataFrame.splice(i, 1)
-                    }                         
-                }                    
-            }
-            setLocalStorage(JSON.stringify(dataFrame))
-            renderTodo(dataFrame)
+            getAlltask().then(data=>{
+                dataFrame = data.results
+                if (dataFrame.length === 0){
+                    alert("Não existe nenhuma tarefa registrada!!!")
+                } else {
+                    for (let i = 0; i < dataFrame.length; i++ ){
+                        if ( dataFrame[i].code === id){
+                            deleteTask(dataFrame[i].objectId)
+                            dataFrame.splice(i, 1)
+                        }                         
+                    }                    
+                }
+                setLocalStorage(JSON.stringify(dataFrame))
+                renderTodo(dataFrame)
+            })
         }
     })
 

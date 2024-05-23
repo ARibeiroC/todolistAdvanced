@@ -36,7 +36,7 @@ import { postTask, putTask } from './apiControl.js'
     }
 
 // SALVA OS DADOS DAS ALTERAÇÃO E ARMAZENA NO DATAFRAME RESPONSÁVEL.
-async function saveEditTask(dataFrame){
+function saveEditTask(dataFrame){
     
     let objectId
 

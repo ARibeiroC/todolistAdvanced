@@ -99,17 +99,18 @@ function saveDataTask(title, description, dataFrame) {
         status: 'todo'
     } 
 
-    // INSERINDO O OBJETO NA LISTA DE TASK
-    dataFrame.push(task) 
-
     // ARMAZENANDO NO BANCO DE DADOS
-    renderTodo(dataFrame)
-    postTask(task) 
+    postTask(task)
+
+    // INSERINDO O OBJETO NA LISTA DE TASK
+    
     
     // RENDERIZANDO OS DADOS NO DOM
     getAlltask().then(data => {
         dataFrame = data.results
+        console.log('Registrando no LocalStorage')
         setLocalStorage(JSON.stringify(dataFrame))
+        renderTodo(dataFrame)
     })
 }
 
