@@ -87,7 +87,7 @@ function saveTodoTask(task, status = 'to-do') {
 
 }
 
-async function saveDataTask(title, description, dataFrame) {
+function saveDataTask(title, description, dataFrame) {
     // CRIAÇÃO DA VARIÁVEL QUE VAI RECEBER O OBJETO TASK
     let task
     let increment = autoIncrementId(dataFrame)
@@ -103,14 +103,14 @@ async function saveDataTask(title, description, dataFrame) {
     dataFrame.push(task) 
 
     // ARMAZENANDO NO BANCO DE DADOS
+    renderTodo(dataFrame)
     postTask(task) 
     
     // RENDERIZANDO OS DADOS NO DOM
-    await getAlltask().then(data => {
+    getAlltask().then(data => {
         dataFrame = data.results
         setLocalStorage(JSON.stringify(dataFrame))
-        renderTodo(dataFrame)
-    })    
+    })
 }
 
 
