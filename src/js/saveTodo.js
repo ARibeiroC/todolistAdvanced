@@ -103,7 +103,7 @@ function saveDataTask(title, description, dataFrame) {
     postTask(task)
 
     // INSERINDO O OBJETO NA LISTA DE TASK
-    
+    dataFrame.push(task)
     
     // RENDERIZANDO OS DADOS NO DOM
     getAlltask().then(data => {
