@@ -3,7 +3,7 @@ import { createElementHtml, createElementCardParent, createElementsOfCardParent 
 import { autoIncrementId } from './autoIncrement.js'
 import { setLocalStorage } from './moduleStorage.js'
 import { renderTodo } from './renderTodo.js'
-import { postTask } from './apiControl.js'
+import { getAlltask, postTask } from './apiControl.js'
 
 
 
@@ -87,34 +87,33 @@ function saveTodoTask(task, status = 'to-do') {
 
 }
 
-function saveDataTask(title, description, data) {
-
+async function saveDataTask(title, description, dataFrame) {
     // CRIAÇÃO DA VARIÁVEL QUE VAI RECEBER O OBJETO TASK
     let task
-    let increment = autoIncrementId()
-
+    let increment = autoIncrementId(dataFrame)
     // OBJETO TASK
     task = {
         code: increment,
         title: title,
         description: description,
         status: 'todo'
-    }
+    } 
 
-    
     // INSERINDO O OBJETO NA LISTA DE TASK
-    data.push(task)
-    setLocalStorage(JSON.stringify(data))
-    sessionStorage.setItem('IsThisFirstTime_Log_From_LiveServer', false)
-    
-    console.log(data)
+    dataFrame.push(task) 
+
+    // ARMAZENANDO NO BANCO DE DADOS
     postTask(task) 
     
     // RENDERIZANDO OS DADOS NO DOM
-    renderTodo(data)
+    await getAlltask().then(data => {
+        dataFrame = data.results
+        setLocalStorage(JSON.stringify(dataFrame))
+        renderTodo(dataFrame)
+    })    
 }
 
 
 
 
-export {saveTodoTask, saveDataTask}
+export { saveTodoTask, saveDataTask }

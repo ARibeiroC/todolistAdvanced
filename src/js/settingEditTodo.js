@@ -1,10 +1,10 @@
 // IMPORT
 import { todoEditIdTask, todoEditTitleTask, todoEditDescriptionTask } from "./elementsHtml.js"
-import { getLocalStorage, setLocalStorage } from "./moduleStorage.js"
+import { setLocalStorage } from "./moduleStorage.js"
 import { todoEditTask, todoAddTask, todoSearch, todoListTask } from "./elementsHtml.js"
 import { back4app } from "./script.js"
 import { renderTodo } from "./renderTodo.js"
-import { postTask } from './apiControl.js'
+import { postTask, putTask } from './apiControl.js'
 
 
 
@@ -21,41 +21,38 @@ import { postTask } from './apiControl.js'
 
 
 // GERENCIA OS DADOS DA TASK SELECIONADA, QUE DEVE SER EDITADA
-    function openEditMode(identify){
-        let dataStorage = JSON.parse(getLocalStorage('task'))
-        let id = todoEditIdTask
-        let title = todoEditTitleTask
-        let description = todoEditDescriptionTask
-
-        dataStorage.forEach((task)=>{
-            if (task.id === identify){
-                id.value = task.id
+    function openEditMode(dataFrame, identify){
+        dataFrame.forEach(task => {
+            if (task.code === identify){
+                let code = todoEditIdTask
+                let title = todoEditTitleTask
+                let description = todoEditDescriptionTask
+    
+                code.value = task.code
                 title.value = task.title
                 description.value = task.description
             }
-        }) 
+        })
     }
 
 // SALVA OS DADOS DAS ALTERAÇÃO E ARMAZENA NO DATAFRAME RESPONSÁVEL.
-async function saveEditTask(){
+async function saveEditTask(dataFrame){
+    
+    let objectId
 
-    const response = await fetch(back4app+'task')
-    .then(res=> res.json())
-    let data = []
-    let id = parseInt(todoEditIdTask.value)
-    let title = todoEditTitleTask.value
-    let description = todoEditDescriptionTask.value
+    dataFrame.forEach(task=>{
+        let code = parseInt(todoEditIdTask.value)
+        if (task.code === code){
+            let title = todoEditTitleTask.value
+            let description = todoEditDescriptionTask.value
 
-    response.forEach((task)=>{
-        if (task.id === id){
-                task.title = title
-                task.description = description
+            task.title = title
+            task.description = description
+            putTask(task, task.objectId)
         }
-        data.push(task)
     })
-    renderTodo(data)
-    setLocalStorage(JSON.stringify(data))    
-    postTask(data)
+    renderTodo(dataFrame)
+    setLocalStorage(JSON.stringify(dataFrame))
     toggleEditMode()
 }
 

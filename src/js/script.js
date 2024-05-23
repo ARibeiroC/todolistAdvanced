@@ -4,7 +4,7 @@ import { renderTodo } from './renderTodo.js'
 import { saveDataTask } from "./saveTodo.js"
 import { setLocalStorage } from  "./moduleStorage.js"
 import { saveEditTask, openEditMode, toggleEditMode  } from './settingEditTodo.js'
-import { postTask, putTask } from './apiControl.js'
+import { deleteTask, getAlltask, putTask } from './apiControl.js'
 
 // GLOBAL VARIABLES
 let dataFrame = []
@@ -20,22 +20,17 @@ const inputSearch = document.querySelector('#input-search')
 const filterSelect = document.querySelector('#filter-select')
 
 
+
 // EVENTOS
     // EVENTO QUE ESCUTA SE O CONTEÚDO DA PÁGINA FOI CARREGADO
 
     btnCancelEditTask.addEventListener('click', toggleEditMode)
-    btnSaveEditTask.addEventListener('click', saveEditTask)
+    btnSaveEditTask.addEventListener('click', ()=>{
+        saveEditTask(dataFrame)
+    })
 
     document.addEventListener("DOMContentLoaded", ()=>{
-        const headers = {
-            method: "GET",
-            headers: {'Content-type': 'application/json', "X-Parse-REST-API-Key": "5LROSgkBJzLv0yQEiepGwvOgD5hjptsXJCK4HkqF", "X-Parse-Application-Id": "idGULhV3R5fnsfKcgBlirH2KZPbAniZddCmZhJ2u"}
-        }
-    
-        back4app = `${back4app}task`
-        fetch(back4app, headers)
-        .then(res=> res.json())
-        .then(data=> {
+        getAlltask().then(data => {
             dataFrame = data.results
             setLocalStorage(JSON.stringify(dataFrame))
             renderTodo(dataFrame)
@@ -57,6 +52,7 @@ const filterSelect = document.querySelector('#filter-select')
         element.preventDefault()
         const titleAddTask = todoTitleInputTask.value
         const descriptionAddTask = todoDescriptionInputTask.value
+
         if (titleAddTask && descriptionAddTask){
             saveDataTask(titleAddTask, descriptionAddTask, dataFrame)
 
@@ -90,63 +86,47 @@ const filterSelect = document.querySelector('#filter-select')
         // VERIFICANDO SE O ELEMENTO CLICADO É O BOTÃO DE FINALIZAR A TASK
         if (btnClicked.classList.contains('finish-todo')){
             // FUNÇÃO PARA MUDAR O VALOR DO STATUS
-            async function statusChange(){
-                await fetch(`${back4app}`, {
-                    method: "GET",
-                    headers: {'Content-type': 'application/json', 
-                    "X-Parse-REST-API-Key": "5LROSgkBJzLv0yQEiepGwvOgD5hjptsXJCK4HkqF", 
-                    "X-Parse-Application-Id": "idGULhV3R5fnsfKcgBlirH2KZPbAniZddCmZhJ2u"},
-                }).then(response => response.json())
-                .then(data => {
-                    // PERCORRE A LISTA DE TASKS E VERIFICA SE É A TASK CORRETA, SE SIM ENTÃO ALTERA O VALOR DO STATUS.
-                    data.results.forEach((task)=> {
-                        if (task.code === id) {
-                            // SE O VALOR DO CAMPO STATUS FOR IGUAL A "DONE", DEVE SER ALTERADO PARA "TO-DO"
-                            if (task.status === 'done'){
-                                task.status = 'todo'                       
-                            }
-                            // DO CONTRÁRIO DEVE INSERIR O VALOR "DONE" NO CAMPO STATUS
-                            else {
-                                // ALTERANDO O STATUS DA TASK
-                                task.status = 'done'
-                            }
-                            putTask(task, task.objectId)
-                        }
-                    })
-                    renderTodo(data.results)
-                    setLocalStorage(data.results)
-                })
-            }
-
-            // let data = JSON.parse(getLocalStorage())
-            statusChange()
-
+            dataFrame.forEach(task => {
+                if (task.code === id) {
+                    // SE O VALOR DO CAMPO STATUS FOR IGUAL A "DONE", DEVE SER ALTERADO PARA "TO-DO"
+                    if (task.status === 'done'){
+                        task.status = 'todo'                       
+                    }
+                    // DO CONTRÁRIO DEVE INSERIR O VALOR "DONE" NO CAMPO STATUS
+                    else {
+                        // ALTERANDO O STATUS DA TASK
+                        task.status = 'done'
+                    }
+                    putTask(task, task.objectId)
+                    renderTodo(dataFrame)
+                    setLocalStorage(JSON.stringify(dataFrame))
+                }
+            })
         }
 
         // VERIFICANDO SE O ELEMENTO CLICADO É O BOTÃO DE EDITAR
         if (btnClicked.classList.contains('edit-todo')){
             toggleEditMode()
-            openEditMode(id)
+            openEditMode(dataFrame, id)
         }
         
 
         // VERIFICANDO SE O ELEMENTO CLICADO É O BOTÃO DE DELETAR
         if (btnClicked.classList.contains('delete-todo')){
             if (dataFrame.length === 0){
-                console.log('Vazio')
+                alert("Não existe nenhuma tarefa registrada!!!")
             } else {
                 for (let i = 0; i < dataFrame.length; i++ ){
-                    if ( dataFrame[i].id == id){
+                    if ( dataFrame[i].code === id){
+                        deleteTask(dataFrame[i].objectId)
                         dataFrame.splice(i, 1)
                     }                         
                 }                    
-                setLocalStorage(JSON.stringify(dataFrame))
-                renderTodo(dataFrame)
             }
-            postTask(dataFrame)
+            setLocalStorage(JSON.stringify(dataFrame))
+            renderTodo(dataFrame)
         }
-
     })
 
 
-export { dataFrame as default, back4app, dataFrame }
+export { dataFrame as default, back4app }

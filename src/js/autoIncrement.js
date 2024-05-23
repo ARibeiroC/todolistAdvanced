@@ -1,15 +1,19 @@
 // FUNÇÃO QUE AUTO INCREMENTA OS VALORES DO ID
-import data from './script.js'
 
-export function autoIncrementId() {
+import { getAlltask } from "./apiControl.js";
+import dataFrame from "./script.js";
+
+
+export function autoIncrementId(dataFrame) {
     let id
-    if (data.length > 0){
-        data.forEach((task)=>{
+
+    if (dataFrame.length > 0){
+        dataFrame.forEach((task)=>{
             id = task.code
         })
-        return id = id + 1
+        id = id + 1
     } else {
         id = 0
-        return id
     }
+    return id
 }
