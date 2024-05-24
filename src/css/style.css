@@ -21,11 +21,11 @@ body::before{
     display: flex;
     align-items: center;
     justify-content: center;
-    content: 'TODO LIST ADVANCED';
+    content: 'PROJETO EDUCACIONAL | CURSO: HORA DE CODAR';
     position: absolute;
     width: 100vw;
     height: auto;
-    top: 10px;
+    top: 0;
     left: 0;
     background-color: #945bf1;
     color: white;
@@ -38,11 +38,11 @@ body::after{
     display: flex;
     align-items: center;
     justify-content: center;
-    content: 'APLICAÇÃO DESENVOLVIDA PARA GERENCIAR TAREFAS';
+    content: 'Adicione e gerencie suas tarefas do dia a dia e seja mais produtivo!';
     position: absolute;
     width: 100vw;
     height: auto;
-    top: 55px;
+    top: calc(10%);
     left: 0;
     background-color: #3ac7ff;
     color: white;
@@ -74,7 +74,6 @@ body::after{
 
 #todo-container { display: flex; flex-direction: column;
 
-max-width: 410px;
 min-width: 410px;
 height: auto;
 max-height: 500px;
