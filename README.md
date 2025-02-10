@@ -15,7 +15,7 @@
 
 ## Imagem do Projeto
 <div>
-  <img src="https://cdn.discordapp.com/attachments/1037246336669601812/1304586451849318410/image.png?ex=672fee50&is=672e9cd0&hm=0b9d6e37b19dcc2765413fafb9addc6c2b4632fbba3d7301fed9fadbe573bdfe&" />
+  <img src="https://i.ibb.co/XrLF2G03/todolist.png" />
 </div>
 
 ## EM PROCESSO DE DESENVOLVIMENTO #
